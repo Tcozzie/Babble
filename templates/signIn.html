@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <title>TODO App</title>
+    <link rel="stylesheet" href="/css/pico.lime.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <script src="/js/htmx.js"></script>
+
+</head>
+<body>
+<main class="container">
+    <header class="container center">
+        <h1><img style="height: 60px" src="/img/todo-white.svg" alt="todoLogo"> TODOApp</h1>
+    </header>
+
+    <div class="container center AuthContainer">
+        <div class="main">
+            <h1 class="title">Sign In</h1>
+            <form action="/users/signIn" method="post" class="formContainer">
+                <div>
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+                <button type="submit" style="width: 80%; margin-left: 60px;">Sign In</button>
+            </form>
+        </div>
+        <p class="toggle-text">
+            Don't have an account? <a href="/users/signUp">Sign Up</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

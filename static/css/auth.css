@@ -1,0 +1,61 @@
+.AuthContainer {
+    height: 80vh;
+    width: 40%;
+    align-content: center;
+}
+
+.main {
+    height: 600px;
+    border: whitesmoke 2px solid;
+    border-radius: 5%;
+    background-color: #1e1e1e;
+    justify-content: center;
+}
+
+.title {
+    padding: 10px;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    color: #bfbfbf;
+    font-size: 0.9em;
+    text-align: left;
+    margin-left: 55px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #4a90e2;
+    border-radius: 5px;
+    background-color: #3e3e3e;
+    color: #ffffff;
+}
+
+.toggle-text {
+  margin-top: 15px;
+  color: #bfbfbf;
+}
+
+.formContainer {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.confirmationContainer {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

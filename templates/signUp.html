@@ -1,0 +1,75 @@
+<html lang="en">
+<head>
+    <title>TODO App</title>
+    <link rel="stylesheet" href="/css/pico.lime.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <script src="/js/htmx.js"></script>
+</head>
+<body>
+<main class="container">
+    <header class="container center">
+        <h1><img style="height: 60px" src="/img/todo-white.svg" alt="todoLogo"> TODOApp</h1>
+    </header>
+
+    <div class="container center AuthContainer">
+        <div class="main">
+            <h1 class="title">Sign Up</h1>
+            <form id="signUpForm" action="/users/signUp" method="post" class="formContainer">
+                <div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="text"
+                               id="email"
+                               name="email"
+                               required
+                               onkeyup="this.setCustomValidity('')"
+                               hx-on:htmx:validation:validate="if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.value)) {
+                                                                        this.setCustomValidity('Please enter a valid email address');
+                                                                        this.reportValidity();
+                                                                   } else {
+                                                                     this.setCustomValidity('');
+                                                                   }"
+                        >
+                    </div>
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               required
+                               onkeyup="this.setCustomValidity('')"
+                               hx-on:htmx:validation:validate="if (!/^(?!.*\s).{2,}$/.test(this.value)) {
+                                                                       this.setCustomValidity('Username must be at least 2 character long and can only contain letters, numbers, symbols, or punctuation (no spaces).');
+                                                                       this.reportValidity();
+                                                                   } else {
+                                                                       this.setCustomValidity('');
+                                                                   }"
+                        >
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               required
+                               onkeyup="this.setCustomValidity('')"
+                               hx-on:htmx:validation:validate="if (!/^.{6,}$/.test(this.value)) {
+                                                                        this.setCustomValidity('Password must be at least 6 characters long.');
+                                                                        this.reportValidity();
+                                                                   } else {
+                                                                        this.setCustomValidity('');
+                                                                   }"
+                        >
+                    </div>
+                </div>
+                <button type="submit" style="width: 80%; margin-left: 60px;">Sign Up</button>
+            </form>
+        </div>
+        <p class="toggle-text">
+            Already have an account? <a href="/users/signIn">Sign In</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

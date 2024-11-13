@@ -1,0 +1,14 @@
+<header class="container center">
+    <h1> Class Message App</h1>
+    <input style="float: right; width: 300px" type="search" name="q" placeholder="Search For a User"
+           value="{{ search }}"
+           hx-post="/todos/active"
+           hx-trigger="input changed delay:500ms, search"
+           hx-target="#todos-list"
+           hx-indicator=".htmx-indicator">
+</header>
+<div style="clear: both; padding: 20px; height: 600px; overflow-y: auto;">
+    {% block content %}
+        {% include "tweet.html" %}
+    {% endblock %}
+</div>

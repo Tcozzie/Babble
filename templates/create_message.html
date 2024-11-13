@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>{{user.username}}</div>
+    <img src={{user.profilePic}} alt="Profile Picture">
+    <form action="/create" method="post">
+        <label>
+            New Message
+            <input
+                    name="tweet" placeholder="Say Something Interesting...">
+        </label>
+    </form>
+    <h1 style="text-align: center">Things You've Said Before</h1>
+    <div style="clear: both; padding: 20px; height: 450px; overflow-y: auto;">
+            {% include "tweet.html" %}
+    </div>
+{% endblock %}

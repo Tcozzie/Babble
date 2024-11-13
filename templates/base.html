@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <title>TODO App</title>
+    <link rel="stylesheet" href="/css/pico.lime.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/site.js"></script>
+    <script src="/js/Sortable.js"></script>
+    <script src="/js/htmx.js"></script>
+</head>
+<body>
+<main class="container">
+    <nav style="justify-content: right">
+      <ul>
+        <li><a href="/homepage">View Posts</a></li>
+        <li><a href="/users/getUser">Create / Edit</a></li>
+      </ul>
+    </nav>
+    {% block content %}
+
+    {% endblock %}
+</main>
+</body>
+</html>
