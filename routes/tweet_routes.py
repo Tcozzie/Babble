@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, request, render_template, redirect, Blueprint, make_response
 from src.helpers.amazon import authenticate_user, register_user, confirm_user, client
 from flask import Flask, request, render_template, redirect, Blueprint
@@ -11,9 +13,22 @@ bp = Blueprint('tweets', __name__)
 
 @bp.get("/homepage")
 def send_to_homepage():
-    tweets = Tweet.all_tweets()
+    return render_template("index.html")
 
-    return render_template("index.html", tweets=tweets)
+
+@bp.get("/tweets/<page>")
+def get_tweets(page):
+    if not page == 1:
+        time.sleep(4)
+
+    page = int(page)
+    tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 2)
+
+    if len(tweets) == 0:
+        return "<div>No More</div>"
+
+    return render_template("tweet.html", tweets=tweets, nextPage=page + 1)
+
 
 @bp.post("/create")
 def create_message():

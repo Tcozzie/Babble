@@ -1,4 +1,9 @@
-{% for tweet in tweets %}
+<div hx-get="/tweets/{{nextPage}}"
+     hx-trigger="revealed"
+     hx-swap="afterend"
+     hx-indicator="#spinner-{{nextPage}}"
+>
+    {% for tweet in tweets %}
     <article
             style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; width: 60%; margin: 20px auto; font-family: Arial, sans-serif;">
         <header style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -13,4 +18,24 @@
             {{tweet.post_date}}
         </footer>
     </article>
-{% endfor %}
+    {% endfor %}
+</div>
+<img id="spinner-{{ nextPage }}"
+     class="htmx-indicator"
+     src="/img/cat.jpeg"
+     style="
+        width: 300px;
+        height: 300px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        animation: spin 4s linear infinite;
+     "
+/>
+<style>
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg);
+    display: none}
+}
+</style>
