@@ -19,7 +19,7 @@ def send_to_homepage():
 @bp.get("/tweets/<page>")
 def get_tweets(page):
     if not page == 1:
-        time.sleep(4)
+        time.sleep(1)
 
     page = int(page)
     tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 2)
