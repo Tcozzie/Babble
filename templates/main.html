@@ -1,4 +1,4 @@
-<header class="container center">
+<header class="container center" style=" height: 180px; position: sticky; top: 100px; background-color: #13171f; border-bottom: #b6b9b7 2px solid;">
     <h1> Class Message App</h1>
     <input style="float: right; width: 300px" type="search" name="q" placeholder="Search For a User"
            value="{{ search }}"
@@ -7,7 +7,7 @@
            hx-target="#todos-list"
            hx-indicator=".htmx-indicator">
 </header>
-<div style="clear: both; padding: 20px; max-height: 600px; overflow-y: scroll"
+<div style="clear: both; padding: 20px;"
 >
     <div hx-get="/tweets/1"
          hx-trigger="revealed"
@@ -19,12 +19,12 @@
          class="htmx-indicator"
          src="/img/cat.jpeg"
          style="
-        width: 300px;
-        height: 300px;
+        width: 100px;
+        height: 100px;
         display: block;
         margin: 0 auto;
         border-radius: 50%;
-        animation: spin 4s linear infinite;
+        animation: spin 0.5s linear infinite;
      "
     />
     <style>
