@@ -38,7 +38,7 @@ def get_user():
 def sign_In():
     userID = request.cookies.get('userId')
 
-    # If there is already a valid cookie. Just send them to the todos page
+    # If there is already a valid cookie. Just send them to the homepage
     if userID:
         return redirect('/homepage')
 

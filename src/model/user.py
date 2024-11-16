@@ -4,13 +4,12 @@ import logging
 from src.model.base import BaseModel
 
 
-
-
 class User(BaseModel):
     username = CharField()
     email = CharField()
     userID = CharField(primary_key=True)
     profilePic = CharField()
+
     @classmethod
     def all(cls, user_id, search=None):
         select = User.select()
@@ -29,7 +28,3 @@ class User(BaseModel):
     @classmethod
     def find(cls, user_id):
         return User.get_or_none(User.userID == user_id)
-
-
-
-
