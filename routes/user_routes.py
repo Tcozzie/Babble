@@ -1,12 +1,12 @@
-from flask import Flask, request, render_template, redirect, Blueprint, make_response
-from src.helpers.amazon import authenticate_user, register_user, confirm_user, client
-from flask import Flask, request, render_template, redirect, Blueprint
-from src.helpers.amazon import authenticate_user
+import redis
+from flask import make_response, request, render_template, redirect, Blueprint
+from src.helpers.amazon import register_user, authenticate_user
 from src.model.tweet import Tweet
 
 from src.model.user import User
 
 bp = Blueprint('users', __name__)
+redis_client = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
 
 
 @bp.get("/getUser")
@@ -18,11 +18,30 @@ def get_user():
     user = User.find(user_id=userID)
     all_my_tweets = Tweet.all_logged_in_user_tweets(logged_in_user=user)
 
-    return render_template("create_message.html", user=user, tweets=all_my_tweets)
+    tweet_data = []
+    for tweet in all_my_tweets:
+        likes = redis_client.hget(f"tweet:{tweet.id}", "likes") or 0
+
+        has_user_liked = redis_client.sismember(f"tweet:{tweet.id}:userLikes", userID)
+        heart_icon = "❤️" if has_user_liked else "🤍"
+
+        tweet_data.append({
+            "tweet": tweet,
+            "likes": int(likes),
+            "heart_icon": heart_icon,
+        })
+
+    return render_template("create_message.html", user=user, tweets=tweet_data)
 
 
 @bp.get("/signIn")
 def sign_In():
+    userID = request.cookies.get('userId')
+
+    # If there is already a valid cookie. Just send them to the todos page
+    if userID:
+        return redirect('/homepage')
+
     return render_template("signIn.html")
 
 
@@ -48,6 +67,16 @@ def sign_in():
 
     # Store the userId in a cookie
     response.set_cookie("userId", user_id, max_age=3600, httponly=True, secure=False)
+
+    return response
+
+
+@bp.get('/logout')
+def logout():
+    response = make_response(redirect('/'))
+
+    # Deleting user cookie so they have to sign in again
+    response.delete_cookie("userId")
 
     return response
 

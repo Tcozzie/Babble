@@ -7,7 +7,7 @@
     <div style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px; margin: 15px auto; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); transition: transform 0.2s ease, box-shadow 0.2s ease;">
         <div style="display: flex; justify-content: space-between">
             <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                <img src={{tweet.user.profilePic}} alt="Profile Picture"
+                <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
                      style="border-radius: 50%; width: 48px; height: 48px; margin-right: 15px;">
                 <div>
                     <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">tcozzie</h3>
@@ -15,33 +15,27 @@
                 </div>
             </div>
             <div>
-                <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.post_date}}</span>
+                <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
             </div>
         </div>
 
         <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3">
-            {{tweet.message}}
+            {{tweet.tweet.message}}
         </p>
 
         <div style="margin-top: 10px; border-top: grey 1px solid;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <div style="display: flex; align-items: center; gap: 5px;">
-                    <span class="icon"
-                          style="color: #4f8a8b; font-size: 20px; cursor: pointer; transition: color 0.2s ease;">❤️</span>
-                    <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">1,342</span>
+                <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
+                    <button
+                            hx-post="/tweets/{{ tweet.tweet.id }}/like"
+                            hx-target="#like-count-{{ tweet.tweet.id }}"
+                            hx-swap="outerHTML" style="all:unset">
+                        {{tweet.heart_icon}}
+                    </button>
+                    <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
                 </div>
 
-                <!--<div style="display: flex; align-items: center; gap: 5px;">
-                    <span class="icon"
-                          style="color: #4f8a8b; font-size: 20px; cursor: pointer; transition: color 0.2s ease;">🔄</span>
-                    <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">59</span>
-                </div>-->
 
-                <!--<div style="display: flex; align-items: center; gap: 5px;">
-                    <span class="icon"
-                          style="color: #4f8a8b; font-size: 20px; cursor: pointer; transition: color 0.2s ease;">💬</span>
-                    <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">9</span>
-                </div>-->
             </div>
         </div>
     </div>
