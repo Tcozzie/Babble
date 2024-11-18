@@ -23,7 +23,7 @@ def send_to_homepage():
 def get_tweets(page):
     userID = request.cookies.get('userId')
     if not userID:
-        return redirect('/')
+        return "<script>window.location = '/'</script>"
 
     if not page == 1:
         time.sleep(1)
@@ -54,7 +54,7 @@ def get_tweets(page):
 def like_tweet(tweet_id):
     userID = request.cookies.get('userId')
     if not userID:
-        return redirect('/')
+        return "<script>window.location = '/'</script>"
 
     has_user_liked_tweet = redis_client.sismember(f"tweet:{tweet_id}:userLikes", userID)
 
