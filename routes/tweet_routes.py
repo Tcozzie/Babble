@@ -58,7 +58,6 @@ def like_tweet(tweet_id):
 
     has_user_liked_tweet = redis_client.sismember(f"tweet:{tweet_id}:userLikes", userID)
 
-
     if has_user_liked_tweet:
         redis_client.srem(f"tweet:{tweet_id}:userLikes", userID)
         new_likes = redis_client.hincrby(f"tweet:{tweet_id}", "likes", -1)
@@ -69,7 +68,7 @@ def like_tweet(tweet_id):
         liked = True
 
     heart_icon = "❤️" if liked else "🤍"
-    return f"<div id='like-count-{ tweet_id }' style='display: flex; align-items: center; gap: 5px;'><button hx-post='/tweets/{ tweet_id }/like' hx-target='#like-count-{ tweet_id }' hx-swap='outerHTML' style='all:unset'>{heart_icon}</button><span style='color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;'>{new_likes}</span></div>"
+    return f"<div id='like-count-{tweet_id}' style='display: flex; align-items: center; gap: 5px;'><button hx-post='/tweets/{tweet_id}/like' hx-target='#like-count-{tweet_id}' hx-swap='outerHTML' style='all:unset'>{heart_icon}</button><span style='color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;'>{new_likes}</span></div>"
 
 
 @bp.post("/create")

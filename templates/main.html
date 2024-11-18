@@ -1,13 +1,4 @@
-<header class="container center" style=" height: 90px; position: sticky; top: 100px; background-color: #13171f; border-bottom: #b6b9b7 2px solid;">
-    <input style="float: right; width: 300px" type="search" name="q" placeholder="Search For a User"
-           value="{{ search }}"
-           hx-post="/todos/active"
-           hx-trigger="input changed delay:500ms, search"
-           hx-target="#todos-list"
-           hx-indicator=".htmx-indicator">
-</header>
-<div style="padding: 20px;"
->
+<div id="tweet_container" style="padding: 20px;">
     <div hx-get="/tweets/1"
          hx-trigger="revealed"
          hx-swap="afterend"
