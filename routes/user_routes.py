@@ -53,7 +53,7 @@ def sign_in():
 
     auth = authenticate_user(username, password)
     if not auth:
-        return "<div>There was an error signing in. Please refresh the page and try again.</div>"
+        return render_template("signIn.html", errorMessage="Username or Password is incorrect")
 
     # If user is in AWS and not in the DB. Add the user to the DB
     if User.find(user_id=auth['userId']) is None:
@@ -97,13 +97,18 @@ def sign_up():
 
     # checking if the sign-up was successful
     if isinstance(auth, Exception):
-        return "<div>There was en error signing up. Please refresh the page and try again.</div>"
+        return render_template("signUp.html", errorMessage="There was en error signing up. Please refresh the page "
+                                                           "and try again")
 
     User.insert(username=username, email=email, userID=auth['UserSub'],
-                profilePic="https://randomuser.me/api/portraits/thumb/men/75.jpg").execute()
+                profilePic="/img/noProfile.jpeg").execute()
 
     # Signing in the user
     auth = authenticate_user(username, password)
+
+    if not auth:
+        return render_template("signIn.html", errorMessage="There was an issue signing you in after sign up. please "
+                                                           "try signing in")
 
     # Create a response object for redirect
     response = make_response(redirect('/homepage'))

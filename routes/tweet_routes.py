@@ -29,7 +29,7 @@ def get_tweets(page):
         time.sleep(1)
 
     page = int(page)
-    tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 2)
+    tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 4)
 
     if len(tweets) == 0:
         return "<div>No More</div>"

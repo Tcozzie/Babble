@@ -9,7 +9,7 @@ from src.model.user import User
 class Tweet(BaseModel):
     message = CharField()
     user = ForeignKeyField(User, backref='tweets')
-    post_date = DateTimeField(default=datetime.datetime.now)
+    post_date = DateTimeField(default=lambda: datetime.datetime.now().strftime('%b %d, %Y - %I:%M %p'))
 
     @classmethod
     def all_tweets(cls):

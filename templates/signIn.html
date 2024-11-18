@@ -10,7 +10,7 @@
 <body>
 <main class="container">
     <header class="container center">
-        <h1><img style="height: 60px" src="/img/todo-white.svg" alt="todoLogo"> TODOApp</h1>
+        <h1><img style="height: 80px;" src="/img/blabberIcon.png" alt="blabberLogo"> Blabber</h1>
     </header>
 
     <div class="container center AuthContainer">
@@ -33,6 +33,9 @@
         <p class="toggle-text">
             Don't have an account? <a href="/users/signUp">Sign Up</a>
         </p>
+        {% if errorMessage %}
+            <p style="color:red">{{errorMessage}}</p>
+        {% endif %}
     </div>
 </main>
 </body>

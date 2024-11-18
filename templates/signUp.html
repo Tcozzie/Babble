@@ -9,7 +9,7 @@
 <body>
 <main class="container">
     <header class="container center">
-        <h1><img style="height: 60px" src="/img/todo-white.svg" alt="todoLogo"> TODOApp</h1>
+        <h1><img style="height: 80px" src="/img/blabberIcon.png" alt="BlabberLogo"> Blabber</h1>
     </header>
 
     <div class="container center AuthContainer">
@@ -19,18 +19,10 @@
                 <div>
                     <div class="input-group">
                         <label for="email">Email</label>
-                        <input type="text"
+                        <input type="email"
                                id="email"
                                name="email"
-                               required
-                               onkeyup="this.setCustomValidity('')"
-                               hx-on:htmx:validation:validate="if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.value)) {
-                                                                        this.setCustomValidity('Please enter a valid email address');
-                                                                        this.reportValidity();
-                                                                   } else {
-                                                                     this.setCustomValidity('');
-                                                                   }"
-                        >
+                               required>
                     </div>
                     <div class="input-group">
                         <label for="username">Username</label>
@@ -38,14 +30,9 @@
                                id="username"
                                name="username"
                                required
-                               onkeyup="this.setCustomValidity('')"
-                               hx-on:htmx:validation:validate="if (!/^(?!.*\s).{2,}$/.test(this.value)) {
-                                                                       this.setCustomValidity('Username must be at least 2 character long and can only contain letters, numbers, symbols, or punctuation (no spaces).');
-                                                                       this.reportValidity();
-                                                                   } else {
-                                                                       this.setCustomValidity('');
-                                                                   }"
-                        >
+                               minlength="2"
+                               pattern="^\S{2,}$"
+                               title="Username must be at least 2 characters long and cannot contain spaces.">
                     </div>
                     <div class="input-group">
                         <label for="password">Password</label>
@@ -53,22 +40,20 @@
                                id="password"
                                name="password"
                                required
-                               onkeyup="this.setCustomValidity('')"
-                               hx-on:htmx:validation:validate="if (!/^.{6,}$/.test(this.value)) {
-                                                                        this.setCustomValidity('Password must be at least 6 characters long.');
-                                                                        this.reportValidity();
-                                                                   } else {
-                                                                        this.setCustomValidity('');
-                                                                   }"
+                               minlength="6"
                         >
                     </div>
                 </div>
+
                 <button type="submit" style="width: 80%; margin-left: 60px;">Sign Up</button>
             </form>
         </div>
         <p class="toggle-text">
             Already have an account? <a href="/users/signIn">Sign In</a>
         </p>
+        {% if errorMessage %}
+            <p style="color:red">{{errorMessage}}</p>
+        {% endif %}
     </div>
 </main>
 </body>

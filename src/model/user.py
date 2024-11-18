@@ -1,5 +1,6 @@
+import datetime
+
 from peewee import *
-import logging
 
 from src.model.base import BaseModel
 
@@ -9,6 +10,7 @@ class User(BaseModel):
     email = CharField()
     userID = CharField(primary_key=True)
     profilePic = CharField()
+    joined_date = DateTimeField(default=lambda: datetime.datetime.now().strftime('%b %d, %Y'))
 
     @classmethod
     def all(cls, user_id, search=None):

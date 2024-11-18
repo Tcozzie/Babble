@@ -8,10 +8,10 @@
         <div style="display: flex; justify-content: space-between">
             <div style="display: flex; align-items: center; margin-bottom: 12px;">
                 <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
-                     style="border-radius: 50%; width: 48px; height: 48px; margin-right: 15px;">
+                     style="border-radius: 50%; height: 48px; margin-right: 15px;">
                 <div>
-                    <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">tcozzie</h3>
-                    <span style="color: #4f8a8b; font-size: 15px;">Member Since: Nov 13</span>
+                    <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">{{tweet.tweet.user.username}}</h3>
+                    <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
                 </div>
             </div>
             <div>
@@ -34,8 +34,6 @@
                     </button>
                     <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
                 </div>
-
-
             </div>
         </div>
     </div>
