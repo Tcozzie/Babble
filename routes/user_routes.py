@@ -58,7 +58,7 @@ def sign_in():
     # If user is in AWS and not in the DB. Add the user to the DB
     if User.find(user_id=auth['userId']) is None:
         User.insert(username=username, email=auth['email'], userID=auth['userId'],
-                    profilePic="https://randomuser.me/api/portraits/thumb/men/75.jpg").execute()
+                    profilePic="/img/noProfile.jpeg").execute()
     # Create a response object for redirect
     response = make_response(redirect('/homepage'))
 
