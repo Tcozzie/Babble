@@ -32,7 +32,7 @@ def get_tweets(page):
     tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 4)
 
     if len(tweets) == 0:
-        return "<div>No More</div>"
+        return "<div style='text-align: center;'>You've scrolled to the end!</div>"
 
     tweet_data = []
     for tweet in tweets:

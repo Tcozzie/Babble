@@ -40,25 +40,6 @@
     {% endfor %}
 </div>
 <img id="spinner-{{ nextPage }}"
-     class="htmx-indicator"
+     class="my-indicator"
      src="/img/cat.jpeg"
-     style="
-        width: 100px;
-        height: 100px;
-        display: block;
-        margin: 0 auto;
-        border-radius: 50%;
-        animation: spin 2s linear infinite;
-     "
 />
-<style>
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-            display: none
-        }
-    }
-</style>

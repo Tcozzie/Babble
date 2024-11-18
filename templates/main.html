@@ -7,7 +7,7 @@
            hx-target="#todos-list"
            hx-indicator=".htmx-indicator">
 </header>
-<div style="clear: both; padding: 20px;"
+<div style="padding: 20px;"
 >
     <div hx-get="/tweets/1"
          hx-trigger="revealed"
@@ -16,27 +16,8 @@
     >
     </div>
     <img id="spinner-0"
-         class="htmx-indicator"
+         class="my-indicator"
          src="/img/cat.jpeg"
-         style="
-        width: 100px;
-        height: 100px;
-        display: block;
-        margin: 0 auto;
-        border-radius: 50%;
-        animation: spin 0.5s linear infinite;
-     "
     />
-    <style>
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-                display: none
-            }
-        }
-    </style>
 </div>
 
