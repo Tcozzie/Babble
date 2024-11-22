@@ -1,5 +1,5 @@
 import datetime
-
+from zoneinfo import ZoneInfo
 from peewee import *
 
 from src.model.base import BaseModel
@@ -9,7 +9,7 @@ from src.model.user import User
 class Tweet(BaseModel):
     message = CharField()
     user = ForeignKeyField(User, backref='tweets')
-    post_date = DateTimeField(default=lambda: datetime.datetime.now().strftime('%b %d, %Y - %I:%M %p'))
+    post_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")).strftime('%b %d, %Y - %I:%M %p'))
 
     @classmethod
     def all_tweets(cls):
