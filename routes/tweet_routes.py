@@ -2,6 +2,8 @@ import time
 
 import redis
 from flask import request, render_template, redirect, Blueprint
+
+from src.model.Comment import Comment
 from src.model.tweet import Tweet
 
 from src.model.user import User
@@ -14,7 +16,7 @@ redis_client = redis.StrictRedis(host='localhost', port=6379, decode_responses=T
 def send_to_homepage():
     userID = request.cookies.get('userId')
     if not userID:
-        return redirect('/')
+        return "<script>window.location = '/'</script>"
 
     return render_template("index.html")
 
@@ -40,11 +42,13 @@ def get_tweets(page):
 
         has_user_liked = redis_client.sismember(f"tweet:{tweet.id}:userLikes", userID)
         heart_icon = "❤️" if has_user_liked else "🤍"
+        comments = Comment.get_all_comments(tweet)
 
         tweet_data.append({
             "tweet": tweet,
             "likes": int(likes),
             "heart_icon": heart_icon,
+            "comments": comments
         })
 
     return render_template("tweet.html", tweets=tweet_data, nextPage=page + 1)
@@ -75,9 +79,32 @@ def like_tweet(tweet_id):
 def create_message():
     userID = request.cookies.get('userId')
     if not userID:
-        return redirect('/')
+        return "<script>window.location = '/'</script>"
 
     user = User.find(user_id=userID)
     tweet = Tweet(message=request.form['tweet'], user=user)
     tweet.save()
     return redirect('/users/getUser')
+
+
+@bp.post("/comment/<int:tweet_id>/")
+def create_comment(tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+
+    user = User.find(user_id=userID)
+    tweet = Tweet().find(tweet_id)
+    comment_message = request.form['comment']
+
+    comment = Comment(message=comment_message, corresponding_tweet=tweet, user=user)
+    comment.save()
+
+    comments = comment.get_all_comments(tweet)
+
+    tweet_data = {
+        "tweet": tweet,
+        "comments": comments
+    }
+
+    return render_template("comments_column.html", tweet=tweet_data)

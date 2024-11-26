@@ -20,3 +20,10 @@ class Tweet(BaseModel):
     def all_logged_in_user_tweets(cls, logged_in_user):
         select = Tweet.select().where(Tweet.user == logged_in_user).order_by(Tweet.post_date.desc())
         return select
+
+    @classmethod
+    def find(cls, input_id):
+        select = Tweet.get_or_none(Tweet.id == int(input_id))
+        return select
+
+

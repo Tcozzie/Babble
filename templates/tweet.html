@@ -4,27 +4,29 @@
      hx-indicator="#spinner-{{nextPage}}"
 >
     {% for tweet in tweets %}
-    <div style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px; margin: 15px auto; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-        <div style="display: flex; justify-content: space-between">
-            <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
-                     style="border-radius: 50%; height: 48px; margin-right: 15px;">
+    <div style="display: flex; justify-content: center; margin: 15px auto; width: 60%; gap: 15px;">
+        <!-- Tweet Content -->
+        <div style="flex: 1; max-width:600px; min-width: 600px; #1e242d; border-radius: 12px; padding: 20px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+            <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                    <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
+                         style="border-radius: 50%; height: 48px; margin-right: 15px;">
+                    <div>
+                        <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">
+                            {{tweet.tweet.user.username}}</h3>
+                        <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
+                    </div>
+                </div>
                 <div>
-                    <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">{{tweet.tweet.user.username}}</h3>
-                    <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
+                    <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
                 </div>
             </div>
-            <div>
-                <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
-            </div>
-        </div>
 
-        <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3">
-            {{tweet.tweet.message}}
-        </p>
+            <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;">
+                {{tweet.tweet.message}}
+            </p>
 
-        <div style="margin-top: 10px; border-top: grey 1px solid;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+            <div style="margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
                 <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
                     <button
                             hx-post="/tweets/{{ tweet.tweet.id }}/like"
@@ -35,10 +37,34 @@
                     <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
                 </div>
             </div>
+
+            <!-- Comment Input Form -->
+            <div id="comment-{{ tweet.tweet.id }}"
+                 style="margin-top: 10px; padding-top: 10px; border-top: 1px solid grey;">
+                <form hx-post="/comment/{{ tweet.tweet.id }}/" hx-swap="outerHTML"
+                      hx-target="#comments-column-{{tweet.tweet.id}}"
+                      style="display: flex; align-items: center; gap: 5px;">
+                    <input name="comment" placeholder="Add a comment..."
+                           style="flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;"
+                           required>
+                </form>
+            </div>
+        </div>
+
+        <!-- Comments Column -->
+        <div id="comments-column-{{tweet.tweet.id}}"
+             style="flex: 0.6; max-height: 275px; overflow-y: auto; background-color: #252b33; border-radius: 12px; padding: 15px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+            <h4 style="color: #4f8a8b; margin-bottom: 10px;">Comments</h4>
+            {% for comment in tweet.comments %}
+            <div style="margin-bottom: 10px; font-size: 14px; color: #d1d5da;">
+                <strong>{{comment.user.username}}:</strong> {{comment.message}}
+            </div>
+            {% endfor %}
         </div>
     </div>
     {% endfor %}
 </div>
+
 <img id="spinner-{{ nextPage }}"
      class="my-indicator"
      src="/img/cat.jpeg"
