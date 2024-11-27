@@ -7,7 +7,7 @@ from src.model.user import User
 
 
 class Tweet(BaseModel):
-    message = CharField()
+    message = FixedCharField(max_length=300)
     user = ForeignKeyField(User, backref='tweets')
     post_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")).strftime('%b %d, %Y - %I:%M %p'))
 

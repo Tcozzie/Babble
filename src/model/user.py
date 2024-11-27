@@ -30,3 +30,9 @@ class User(BaseModel):
     @classmethod
     def find(cls, user_id):
         return User.get_or_none(User.userID == user_id)
+
+    @classmethod
+    def update_profile_pic(cls, user_id, new_profile_pic):
+        query = User.update(profilePic=new_profile_pic).where(User.userID == user_id)
+        rows_updated = query.execute()
+        return rows_updated

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px 20px 0 20px; margin: 15px auto;">
+    <div style="display: flex; justify-content: space-between">
+        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+            <img src={{user.profilePic}} alt="Profile Picture"
+                 style="border-radius: 50%; height: 48px; margin-right: 15px;">
+            <div>
+                <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">{{user.username}}</h3>
+                <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{user.joined_date}}</span>
+            </div>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <button style="border: unset; background-color: unset;"
+                    hx-get="/users/editProfile/{{True}}"
+                    hx-target="#mainBabbleArea"
+                    hx-swap="innerHTML">
+                <img src="/img/pencil.png"
+                     alt="editIcon"
+                     style="height: 30px;">
+            </button>
+        </div>
+    </div>
+    <div id="mainBabbleArea" >
+        {% include "createBabble.html" %}
+    </div>
+</div>
+
+<h3 style="text-align: center">Things You've Said Before</h3>
+<div style="clear: both; padding: 20px; height: 450px;">
+    {% include "tweet.html" %}
+</div>
+{% endblock %}

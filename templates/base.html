@@ -6,10 +6,23 @@
     <script src="/js/site.js"></script>
     <script src="/js/Sortable.js"></script>
     <script src="/js/htmx.js"></script>
+    <style>
+        main.container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            overflow: auto;
+        }
+    </style>
 </head>
 <body>
 <main class="container">
-    <nav style="justify-content: space-between; height: 100px; position: sticky; top: 0; background-color: #13171f; border-bottom: #b6b9b7 2px solid;">
+    <nav style="justify-content: space-between; height: 100px; position: sticky; top: 0; background-color: #13171f; border-bottom: #b6b9b7 2px solid; z-index: 20">
         <div style="display: flex; justify-content: space-between; align-items: center; width: 57%;">
             <ul>
                 <li><a href="/users/logout">Logout</a></li>
@@ -22,9 +35,11 @@
             <li><a href="/users/getUser">Create / Edit</a></li>
         </ul>
     </nav>
-    {% block content %}
 
-    {% endblock %}
+    <div class="content-wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
 </main>
 </body>
 </html>

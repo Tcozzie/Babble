@@ -31,7 +31,34 @@ def get_user():
             "heart_icon": heart_icon,
         })
 
-    return render_template("create_message.html", user=user, tweets=tweet_data)
+    return render_template("profile.html", user=user, tweets=tweet_data)
+
+
+@bp.get("/editProfile/<editing>")
+def edit_profile(editing):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return redirect('/')
+
+    if editing == "True":
+        return render_template("editProfile.html")
+    return render_template("createBabble.html")
+
+
+@bp.post("/editProfile/image")
+def edit_profile_image():
+    userID = request.cookies.get('userId')
+    if not userID:
+        return redirect("/")
+
+    selected_icon = request.form.get('selectedIcon')
+
+    if not selected_icon:
+        return "<script>window.history.back();</script>"
+
+    User.update_profile_pic(userID, selected_icon)
+
+    return redirect("/users/getUser")
 
 
 @bp.get("/signIn")
