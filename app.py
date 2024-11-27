@@ -2,6 +2,7 @@ from flask import Flask, redirect
 from src.model.base import db
 from src.model.user import User
 from src.model.tweet import Tweet
+from src.model.Comment import Comment
 from routes.user_routes import bp as users_bp
 from routes.tweet_routes import bp as tweets_bp
 
@@ -11,7 +12,7 @@ app.register_blueprint(tweets_bp, url_prefix='/')
 app.debug = True
 
 with db:
-    db.create_tables([User, Tweet], safe=True)
+    db.create_tables([User, Tweet, Comment], safe=True)
 
 
 @app.before_request
