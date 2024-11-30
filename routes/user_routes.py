@@ -3,6 +3,7 @@ from flask import make_response, request, render_template, redirect, Blueprint
 from src.helpers.amazon import register_user, authenticate_user
 from src.model.tweet import Tweet
 
+from src.model.Comment import Comment
 from src.model.user import User
 
 bp = Blueprint('users', __name__)
@@ -24,11 +25,13 @@ def get_user():
 
         has_user_liked = redis_client.sismember(f"tweet:{tweet.id}:userLikes", userID)
         heart_icon = "❤️" if has_user_liked else "🤍"
+        comments = Comment.get_all_comments(tweet)
 
         tweet_data.append({
             "tweet": tweet,
             "likes": int(likes),
             "heart_icon": heart_icon,
+            "comments": comments
         })
 
     return render_template("profile.html", user=user, tweets=tweet_data)

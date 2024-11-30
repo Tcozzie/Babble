@@ -48,10 +48,11 @@ def get_tweets(page):
             "tweet": tweet,
             "likes": int(likes),
             "heart_icon": heart_icon,
-            "comments": comments
+            "comments": comments,
+            "comment_count": len(comments)
         })
 
-    return render_template("tweet.html", tweets=tweet_data, nextPage=page + 1)
+    return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1)
 
 
 @bp.post("/tweets/<int:tweet_id>/like")
@@ -73,6 +74,21 @@ def like_tweet(tweet_id):
 
     heart_icon = "❤️" if liked else "🤍"
     return f"<div id='like-count-{tweet_id}' style='display: flex; align-items: center; gap: 5px;'><button hx-post='/tweets/{tweet_id}/like' hx-target='#like-count-{tweet_id}' hx-swap='outerHTML' style='all:unset'>{heart_icon}</button><span style='color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;'>{new_likes}</span></div>"
+
+
+@bp.get("/tweets/<tweet>/comment")
+def get_comment_section(tweet):
+    user_id = request.cookies.get('userId')
+    if not user_id:
+        return "<script>window.location = '/'</script>"
+
+    user = User.find(user_id=user_id)
+    is_shown = request.args.get('shown') == 'true'
+    if not is_shown:
+        comments = Comment.get_all_comments(tweet)
+        return render_template("commentSection.html", comments=comments, tweet=tweet, user=user)
+    else:
+        return f'<div id="comment-area-{tweet}"></div>'
 
 
 @bp.post("/create")
@@ -102,9 +118,4 @@ def create_comment(tweet_id):
 
     comments = comment.get_all_comments(tweet)
 
-    tweet_data = {
-        "tweet": tweet,
-        "comments": comments
-    }
-
-    return render_template("comments_column.html", tweet=tweet_data)
+    return render_template("commentSection.html", comments=comments, tweet=tweet, user=user)

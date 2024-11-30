@@ -1,5 +1,4 @@
 import datetime
-from zoneinfo import ZoneInfo
 from peewee import *
 
 from src.model.base import BaseModel
@@ -8,10 +7,10 @@ from src.model.user import User
 
 
 class Comment(BaseModel):
-    message = CharField()
+    message = FixedCharField(max_length=150)
     user = ForeignKeyField(User, backref='comment_user')
     corresponding_tweet = ForeignKeyField(Tweet, backref='corresponding_tweet')
-    post_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")).strftime('%b %d, %Y - %I:%M %p'))
+    post_date = DateTimeField(default=datetime.datetime.now)
 
     @classmethod
     def get_all_comments(cls, tweet):
