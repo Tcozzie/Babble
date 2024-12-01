@@ -1,3 +1,5 @@
+
+
 <div hx-get="/tweets/{{nextPage}}"
      hx-trigger="revealed"
      hx-swap="afterend"
@@ -14,9 +16,36 @@
                     <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
                 </div>
             </div>
-            <div>
-                <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
+    <div  style="display: flex; justify-content: flex-end; align-items: center; position: relative; flex-grow: 1;">
+        <span class="time" style="color: #4f8a8b; font-size: 15px; margin-right: 10px;">{{tweet.tweet.post_date}}</span>
+
+        {% if tweet.tweet.user.userID == user.userID %}
+            <div style=" position: relative;font-size: 12px; cursor: pointer; text-align: right; margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
+                    <div class="dropdown">
+                        <button onclick="toggleDropdown(event,this)" style="margin-top: -18px; background: none; border: none; font-size: 10px; display: inline-block; outline: none;"  >
+                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
+                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
+                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
+                        </button>
+
+                        <div class="content">
+<!--                            <form hx-post="/delete" hx-target="body" >-->
+                                    <input type="hidden" name="message" value="{{ tweet.tweet.message }}">
+                                    <button type="submit" style="color: black">
+                                        EDIT
+                                    </button>
+<!--                            </form>-->
+                            <form hx-post="/delete" hx-target="body" >
+                                    <input type="hidden" name="message" value="{{ tweet.tweet.message }}">
+                                    <button type="submit" style="color: black">
+                                        DELETE
+                                    </button>
+                            </form>
+                        </div>
+                    </div>
             </div>
+        {% endif %}
+    </div>
         </div>
 
         <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3">

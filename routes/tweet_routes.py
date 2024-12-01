@@ -31,6 +31,8 @@ def get_tweets(page):
     page = int(page)
     tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 4)
 
+    user = User.find(user_id=userID)
+
     if len(tweets) == 0:
         return "<div style='text-align: center;'>You've scrolled to the end!</div>"
 
@@ -47,7 +49,7 @@ def get_tweets(page):
             "heart_icon": heart_icon,
         })
 
-    return render_template("tweet.html", tweets=tweet_data, nextPage=page + 1)
+    return render_template("tweet.html", tweets=tweet_data, nextPage=page + 1, user=user)
 
 
 @bp.post("/tweets/<int:tweet_id>/like")
@@ -81,3 +83,22 @@ def create_message():
     tweet = Tweet(message=request.form['tweet'], user=user)
     tweet.save()
     return redirect('/users/getUser')
+
+@bp.post("/delete")
+def delete_message():
+    message = request.form.get('message')
+    userID = request.cookies.get('userId')
+    if not userID:
+        return redirect('/')
+
+    user = User.find(user_id=userID)
+    tweet = Tweet.select().where(Tweet.message == message, Tweet.user == user).first()
+
+    if tweet:
+        tweet.delete_instance()
+    else:
+        return "Tweet not found",
+
+    tweet.save()
+
+    return render_template("tweet.html")
