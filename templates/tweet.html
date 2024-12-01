@@ -1,74 +1,57 @@
-
-
-<div hx-get="/tweets/{{nextPage}}"
-     hx-trigger="revealed"
-     hx-swap="afterend"
-     hx-indicator="#spinner-{{nextPage}}"
->
-    {% for tweet in tweets %}
-    <div style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px; margin: 15px auto; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); transition: transform 0.2s ease, box-shadow 0.2s ease;">
-        <div style="display: flex; justify-content: space-between">
-            <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
-                     style="border-radius: 50%; height: 48px; margin-right: 15px;">
-                <div>
-                    <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">{{tweet.tweet.user.username}}</h3>
-                    <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
-                </div>
-            </div>
-    <div  style="display: flex; justify-content: flex-end; align-items: center; position: relative; flex-grow: 1;">
-        <span class="time" style="color: #4f8a8b; font-size: 15px; margin-right: 10px;">{{tweet.tweet.post_date}}</span>
-
-        {% if tweet.tweet.user.userID == user.userID %}
-            <div style=" position: relative;font-size: 12px; cursor: pointer; text-align: right; margin-left: 10px; display: flex; flex-direction: column; align-items: center;">
-                    <div class="dropdown">
-                        <button onclick="toggleDropdown(event,this)" style="margin-top: -18px; background: none; border: none; font-size: 10px; display: inline-block; outline: none;"  >
-                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
-                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
-                            <span style="display: block; height: 4px; width: 8px; margin: 4px 0; background-color: #4f8a8b;"></span>
-                        </button>
-
-                        <div class="content">
-<!--                            <form hx-post="/delete" hx-target="body" >-->
-                                    <input type="hidden" name="message" value="{{ tweet.tweet.message }}">
-                                    <button type="submit" style="color: black">
-                                        EDIT
-                                    </button>
-<!--                            </form>-->
-                            <form hx-post="/delete" hx-target="body" >
-                                    <input type="hidden" name="message" value="{{ tweet.tweet.message }}">
-                                    <button type="submit" style="color: black">
-                                        DELETE
-                                    </button>
-                            </form>
-                        </div>
-                    </div>
-            </div>
-        {% endif %}
-    </div>
-        </div>
-
-        <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3">
-            {{tweet.tweet.message}}
-        </p>
-
-        <div style="margin-top: 10px; border-top: grey 1px solid;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
-                    <button
-                            hx-post="/tweets/{{ tweet.tweet.id }}/like"
-                            hx-target="#like-count-{{ tweet.tweet.id }}"
-                            hx-swap="outerHTML" style="all:unset">
-                        {{tweet.heart_icon}}
-                    </button>
-                    <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
-                </div>
+<div style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px; margin: 15px auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+    <div style="display: flex; justify-content: space-between">
+        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+            <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
+                 style="border-radius: 50%; height: 48px; margin-right: 15px;">
+            <div>
+                <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">
+                    {{tweet.tweet.user.username}}</h3>
+                <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
             </div>
         </div>
+        <div>
+            <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
+        </div>
     </div>
-    {% endfor %}
+
+    <p style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;">
+        {{tweet.tweet.message}}
+    </p>
+
+    <div style=" display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
+        <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
+            <button
+                    hx-post="/tweets/{{ tweet.tweet.id }}/like"
+                    hx-target="#like-count-{{ tweet.tweet.id }}"
+                    hx-swap="outerHTML" style="all:unset; cursor: pointer">
+                {{tweet.heart_icon}}
+            </button>
+            <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <button
+                    hx-get="/tweets/{{tweet.tweet.id}}/comment?shown=false"
+                    hx-target="#comment-area-{{tweet.tweet.id}}"
+                    hx-swap="outerHTML"
+                    hx-on::after-request="updateButtonState(this)"
+                    data-tweet-id="{{ tweet.tweet.id }}"
+                    style="all:unset; cursor: pointer">
+                💬
+            </button>
+            <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.comment_count}}</span>
+        </div>
+    </div>
+    <div id="comment-area-{{tweet.tweet.id}}"></div>
 </div>
-<img id="spinner-{{ nextPage }}"
-     class="my-indicator"
-     src="/img/cat.jpeg"
-/>
+
+<script>
+    function updateButtonState(button){
+        const currentUrl = button.getAttribute('hx-get');
+        const tweetId = button.getAttribute('data-tweet-id');
+        const urlParams = new URLSearchParams(currentUrl.split('?')[1]);
+        const isShown = urlParams.get('shown') === 'false';
+        const newUrl = `/tweets/${tweetId}/comment?shown=${isShown}`;
+        button.setAttribute('hx-get', newUrl);
+        htmx.process(button);
+    }
+</script>
