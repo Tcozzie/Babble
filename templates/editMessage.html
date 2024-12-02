@@ -1,0 +1,12 @@
+    <form id="formID-{{tweet.id}}"
+          hx-post="/tweets/{{ tweet.id }}/update"
+          hx-swap="outerHTML"
+          hx-target="#tweet-text-{{ tweet.id }}"
+          style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;">
+        <textarea autofocus required type="text" name="message" style="border: white">
+        {{tweet.message}}
+        </textarea>
+        <button type="submit" style="background-color: #4f8a8b; border: white; color: white">
+            update
+        </button>
+    </form>
