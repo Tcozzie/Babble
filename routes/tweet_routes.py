@@ -129,8 +129,9 @@ def delete_message(tweet_id):
         return "<script>window.location = '/'</script>"
 
     tweet = Tweet.find(tweet_id)
+    user = User.find(userID)
 
-    if tweet.user.userID != userID:
+    if tweet.user != user:
         return "<script>window.location = '/'</script>"
 
     if tweet:
@@ -150,7 +151,9 @@ def edit_message(editing, tweet_id):
         return "<script>window.location = '/'</script>"
     tweet = Tweet.find(tweet_id)
 
-    if tweet.user.userID != userID:
+    user = User.find(userID)
+
+    if tweet.user != user:
         return "<script>window.location = '/'</script>"
 
     if editing == "True":
