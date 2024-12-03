@@ -130,14 +130,19 @@ def delete_message(tweet_id):
 
     tweet = Tweet.find(tweet_id)
     user = User.find(userID)
+    comments = Comment.get_all_comments(tweet)
 
     if tweet.user != user:
         return "<script>window.location = '/'</script>"
 
     if tweet:
         tweet.delete_instance()
+        # TODO not sure how to implement?
+        # redis_client.delete(f"tweet:{tweet_id}:userLikes")
+        # redis_client.delete(f"tweet:{tweet_id}")
+        # comments.delete()
     else:
-        return "Tweet not found",
+        return "Tweet not found"
 
     tweet.save()
 

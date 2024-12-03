@@ -1,4 +1,6 @@
 <div id="tweet_container" style="padding: 20px;">
+
+    {% set editPageOpen = False %}
     <div hx-get="/tweets/1"
          hx-trigger="revealed"
          hx-swap="afterend"
