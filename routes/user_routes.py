@@ -31,7 +31,9 @@ def get_user():
             "tweet": tweet,
             "likes": int(likes),
             "heart_icon": heart_icon,
-            "comments": comments
+            "comments": comments,
+            "comment_count": len(comments),
+            "formatted_post_date": tweet.formatted_post_date()
         })
 
     return render_template("profile.html", user=user, tweets=tweet_data)

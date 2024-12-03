@@ -10,7 +10,7 @@
             </div>
         </div>
         <div>
-            <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
+            <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.formatted_post_date}}</span>
         </div>
     </div>
 
@@ -45,7 +45,7 @@
 </div>
 
 <script>
-    function updateButtonState(button){
+    function updateButtonState(button) {
         const currentUrl = button.getAttribute('hx-get');
         const tweetId = button.getAttribute('data-tweet-id');
         const urlParams = new URLSearchParams(currentUrl.split('?')[1]);

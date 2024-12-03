@@ -49,7 +49,8 @@ def get_tweets(page):
             "likes": int(likes),
             "heart_icon": heart_icon,
             "comments": comments,
-            "comment_count": len(comments)
+            "comment_count": len(comments),
+            "formatted_post_date": tweet.formatted_post_date()
         })
 
     return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1)
@@ -99,7 +100,8 @@ def create_message():
 
     user = User.find(user_id=userID)
     tweet = Tweet(message=request.form['tweet'], user=user)
-    tweet.save()
+    if len(request.form['tweet']) > 0:
+        tweet.save()
     return redirect('/users/getUser')
 
 
@@ -114,7 +116,9 @@ def create_comment(tweet_id):
     comment_message = request.form['comment']
 
     comment = Comment(message=comment_message, corresponding_tweet=tweet, user=user)
-    comment.save()
+
+    if len(request.form['comment']) > 0:
+        comment.save()
 
     comments = comment.get_all_comments(tweet)
 
