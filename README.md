@@ -1,5 +1,5 @@
-# 331-finalProject-TODO
-Final Project for 331 Social TODO app
+# 331-finalProject-Babble
+Final Project for 331 Babble app
 
 Partners: Tiegan Cozzie, Burgin Luker, Josh Wilcox, Morgan Hanson
 
