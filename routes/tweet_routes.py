@@ -33,6 +33,8 @@ def get_tweets(page):
     page = int(page)
     tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 4)
 
+    user = User.find(user_id=userID)
+
     if len(tweets) == 0:
         return "<div style='text-align: center;'>You've scrolled to the end!</div>"
 
@@ -52,7 +54,7 @@ def get_tweets(page):
             "comment_count": len(comments)
         })
 
-    return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1)
+    return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1, user=user)
 
 
 @bp.post("/tweets/<int:tweet_id>/like")
@@ -119,3 +121,49 @@ def create_comment(tweet_id):
     comments = comment.get_all_comments(tweet)
 
     return render_template("commentSection.html", comments=comments, tweet=tweet, user=user)
+
+@bp.delete("/delete/<int:tweet_id>")
+def delete_message(tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+
+    tweet = Tweet.find(tweet_id)
+
+    if tweet.user.userID != userID:
+        return "<script>window.location = '/'</script>"
+
+    if tweet:
+        tweet.delete_instance()
+    else:
+        return "Tweet not found",
+
+    tweet.save()
+
+    return ""
+
+
+@bp.get("/tweets/editMessage/<editing>/<int:tweet_id>")
+def edit_message(editing, tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+    tweet = Tweet.find(tweet_id)
+
+    if tweet.user.userID != userID:
+        return "<script>window.location = '/'</script>"
+
+    if editing == "True":
+        return render_template("editMessage.html", tweet=tweet)
+
+
+@bp.post("/tweets/<int:tweet_id>/update/")
+def update_tweet(tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+
+    tweet = Tweet.find(tweet_id)
+    tweet.message = request.form['message']
+    tweet.save()
+    return f"<p id='tweet-text-{ tweet.id }'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
