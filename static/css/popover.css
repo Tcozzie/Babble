@@ -33,7 +33,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Strong shadow for depth */
     width: 180px; /* Fixed width for consistency */
     z-index: 1000;
-    padding: 8px 0;
+    padding: 8px 0px 0px;
 }
 
 /* Display the dropdown when activated */
@@ -57,7 +57,7 @@
 }
 
 .dropdown .content button:hover {
-    background-color: #4f8a8b; /* Accent color on hover */
+    background-color: #252B33FF; /* Accent color on hover */
     color: white;
     border-radius: 0; /* Ensures rectangle hover shape */
 }
