@@ -1,0 +1,88 @@
+div[style*="display: flex; align-items: flex-start"] {
+    gap: 10px;
+}
+
+/* General Dropdown Styling */
+.dropdown {
+    display: inline-block;
+    font-family: Arial, sans-serif;
+}
+
+/* Button (three dots icon) */
+.dropdown button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    height: 40px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown Menu */
+.dropdown .content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    right: 0; /* Align to the button */
+    top: 110%; /* Position slightly below the button */
+    background-color:#1e242d; /* Dark theme */
+    border-radius: 4px; /* Slightly rounded corners for menu */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Strong shadow for depth */
+    width: 180px; /* Fixed width for consistency */
+    z-index: 1000;
+    padding: 8px 0 0;
+}
+
+/* Display the dropdown when activated */
+.dropdown.show .content {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Dropdown Menu Items */
+.dropdown .content button {
+    display: block;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+    padding: 12px 15px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown .content button:hover {
+    background-color: #252b33; /* Accent color on hover */
+    color: white;
+}
+
+/* DELETE Button Special Styling */
+.dropdown .content button[type="submit"] {
+    color: #ff4d4d; /* Bold red color for DELETE */
+}
+
+.dropdown .content button[type="submit"]:hover {
+    background-color: #252b33; /* Subtle red highlight */
+    color: #ff4d4d;
+}
+
+/* Smooth Fade-In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -29,8 +29,9 @@
 </div>
 
 <h3 style="text-align: center">Things You've Said Before</h3>
-<div style="clear: both; padding: 20px; height: 450px">
-  {% include "tweetsPage.html" %}
+<div style="clear: both; padding: 20px; height: 450px;">
+    {% set editPageOpen = True %}
+    {% include "tweetsPage.html" %}
 </div>
 
 <style>

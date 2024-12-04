@@ -33,6 +33,8 @@ def get_tweets(page):
     page = int(page)
     tweets = Tweet.select().order_by(Tweet.post_date.desc()).paginate(page, 4)
 
+    user = User.find(user_id=userID)
+
     if len(tweets) == 0:
         return "<div style='text-align: center;'>You've scrolled to the end!</div>"
 
@@ -53,7 +55,7 @@ def get_tweets(page):
             "formatted_post_date": tweet.formatted_post_date()
         })
 
-    return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1)
+    return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1, user=user)
 
 
 @bp.post("/tweets/<int:tweet_id>/like")
@@ -100,7 +102,7 @@ def create_message():
 
     user = User.find(user_id=userID)
     tweet = Tweet(message=request.form['tweet'], user=user)
-    if len(request.form['tweet']) > 0:
+    if 0 < len(request.form['tweet']) <= 300:
         tweet.save()
     return redirect('/users/getUser')
 
@@ -117,9 +119,66 @@ def create_comment(tweet_id):
 
     comment = Comment(message=comment_message, corresponding_tweet=tweet, user=user)
 
-    if len(request.form['comment']) > 0:
+    if 0 < len(request.form['comment']) <= 300:
         comment.save()
 
     comments = comment.get_all_comments(tweet)
 
     return render_template("commentSection.html", comments=comments, tweet=tweet, user=user)
+
+@bp.delete("/delete/<int:tweet_id>")
+def delete_message(tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+
+    tweet = Tweet.find(tweet_id)
+    user = User.find(userID)
+    comments = Comment.get_all_comments(tweet)
+
+    if tweet.user != user:
+        return "<script>window.location = '/'</script>"
+
+    for comment in comments:
+        comment.delete_instance()
+        comment.save()
+
+    if tweet:
+        tweet.delete_instance()
+        redis_client.delete(f"tweet:{tweet_id}:userLikes")
+        redis_client.hset(f"tweet:{tweet_id}", "likes", 0)
+    else:
+        return "Tweet not found"
+
+    tweet.save()
+
+    return ""
+
+
+@bp.get("/tweets/editMessage/<editing>/<int:tweet_id>")
+def edit_message(editing, tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+    tweet = Tweet.find(tweet_id)
+
+    user = User.find(userID)
+
+    if tweet.user != user:
+        return "<script>window.location = '/'</script>"
+
+    if editing == "True":
+        return render_template("editMessage.html", tweet=tweet)
+
+
+@bp.post("/tweets/<int:tweet_id>/update/")
+def update_tweet(tweet_id):
+    userID = request.cookies.get('userId')
+    if not userID:
+        return "<script>window.location = '/'</script>"
+
+    tweet = Tweet.find(tweet_id)
+    tweet.message = request.form['message']
+    if 0 < len(request.form['message']) <= 300:
+        tweet.save()
+    return f"<p id='tweet-text-{ tweet.id }'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
