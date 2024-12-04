@@ -1,7 +1,7 @@
 {%if tweet.tweet.user.isFounder%}
-    {% include "founderTweet.html" %}
+{% include "founderTweet.html" %}
 {%else%}
-    <div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer">
+<div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer">
     <div style="display: flex; justify-content: space-between">
         <div style="display: flex; align-items: center; margin-bottom: 12px;">
             <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
@@ -79,8 +79,6 @@
 </div>
 {%endif%}
 
-
-
 <style>
     .tweetContainer {
         max-width: 800px;
@@ -138,23 +136,21 @@
             height: 70px;
         }
 
-        .editIcon{
-            height: 30px;
+        .editIcon {
+            height: 35px;
         }
     }
-
-
 </style>
 
 
 <script>
     function updateButtonState(button) {
-        const currentUrl = button.getAttribute('hx-get');
-        const tweetId = button.getAttribute('data-tweet-id');
-        const urlParams = new URLSearchParams(currentUrl.split('?')[1]);
-        const isShown = urlParams.get('shown') === 'false';
+        const currentUrl = button.getAttribute("hx-get");
+        const tweetId = button.getAttribute("data-tweet-id");
+        const urlParams = new URLSearchParams(currentUrl.split("?")[1]);
+        const isShown = urlParams.get("shown") === "false";
         const newUrl = `/tweets/${tweetId}/comment?shown=${isShown}`;
-        button.setAttribute('hx-get', newUrl);
+        button.setAttribute("hx-get", newUrl);
         htmx.process(button);
     }
 </script>
