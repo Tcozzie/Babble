@@ -1,6 +1,9 @@
+div[style*="display: flex; align-items: flex-start"] {
+    gap: 10px;
+}
+
 /* General Dropdown Styling */
 .dropdown {
-    position: relative;
     display: inline-block;
     font-family: Arial, sans-serif;
 }
@@ -10,16 +13,17 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     outline: none;
+    height: 40px;
     transition: background-color 0.2s ease-in-out;
 }
 
 .dropdown button:hover {
-    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect */
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Dropdown Menu */
@@ -33,7 +37,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Strong shadow for depth */
     width: 180px; /* Fixed width for consistency */
     z-index: 1000;
-    padding: 8px 0px 0px;
+    padding: 8px 0 0;
 }
 
 /* Display the dropdown when activated */
@@ -57,9 +61,8 @@
 }
 
 .dropdown .content button:hover {
-    background-color: #252B33FF; /* Accent color on hover */
+    background-color: #252b33; /* Accent color on hover */
     color: white;
-    border-radius: 0; /* Ensures rectangle hover shape */
 }
 
 /* DELETE Button Special Styling */
@@ -68,9 +71,8 @@
 }
 
 .dropdown .content button[type="submit"]:hover {
-    background-color: #252B33FF; /* Subtle red highlight */
+    background-color: #252b33; /* Subtle red highlight */
     color: #ff4d4d;
-    border-radius: 0; /* Ensures rectangle hover shape */
 }
 
 /* Smooth Fade-In Animation */

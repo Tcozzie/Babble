@@ -10,15 +10,15 @@
                 <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
             </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; align-items: center; position: relative; flex-grow: 1;">
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
             <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
 
             {% if tweet.tweet.user.userID == user.userID and editPageOpen == True %}
-            <div style=" position: relative;font-size: 12px; cursor: pointer; text-align: right; margin-left: 5px; display: flex; flex-direction: column; align-items: center;">
+            <div style="position: relative; cursor: pointer; text-align: right; display: flex; flex-direction: column; align-items: flex-start;">
                 <div class="dropdown">
-                    <button onclick="toggleDropdown(event,this)"
-                            style="margin-top: 2px; background: none; border: none; font-size: 10px; display: inline-block; outline: none;">
-                        <img src="/img/drag-vertical-svgrepo-com.svg" style="height: 80px; margin-bottom: 1px; margin-right: 10px" alt="Three Dot Icon" />
+                    <button onclick="toggleDropdown(event, this)"
+                            style="background: none; border: none; display: inline-block; outline: none; height: 24px; padding: 0; margin: 0; align-self: flex-start;">
+                        <img src="/img/drag-vertical-svgrepo-com.svg" style="height: 24px;" alt="Three Dot Icon"/>
                     </button>
 
                     <div class="content">
@@ -39,9 +39,7 @@
                     </div>
                 </div>
             </div>
-
             {% endif %}
-
         </div>
     </div>
 
