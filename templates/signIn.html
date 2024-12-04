@@ -7,13 +7,57 @@
     <script src="/js/htmx.js"></script>
 
 </head>
+<style>
+    main {
+        display: block;
+        flex-direction: initial;
+        height: auto;
+        position: static;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-size: 20px;
+        min-width: 800px;
+    }
+
+    img {
+        height: 60px;
+    }
+
+
+    @media (max-width: 1200px) {
+        img {
+            height: 80px
+        }
+
+        h1 {
+            font-size: 60px;
+        }
+
+        label {
+            font-size: 35px;
+        }
+
+        p {
+            font-size: 30px;
+        }
+
+
+
+    }
+
+
+</style>
 <body>
-<main class="container">
+<main>
     <header class="container center">
         <h1><img style="height: 60px;" src="/img/blabberIcon.png" alt="blabberLogo"> Babble</h1>
     </header>
 
-    <div class="container center AuthContainer">
+    <div class="AuthContainer">
         <div class="main">
             <h1 class="title">Sign In</h1>
             <form action="/users/signIn" method="post" class="formContainer">
@@ -30,7 +74,7 @@
                     <p style="color:red">{{errorMessage}}</p>
                     {% endif %}
                 </div>
-                <button type="submit" style="width: 80%; margin-left: 60px;">Sign In</button>
+                <button type="submit" style="width: 80%; margin: auto">Sign In</button>
             </form>
         </div>
         <p class="toggle-text">

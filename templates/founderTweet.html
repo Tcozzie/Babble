@@ -1,19 +1,16 @@
-{%if tweet.tweet.user.isFounder%}
-    {% include "founderTweet.html" %}
-{%else%}
-    <div class="tweetContainer">
+<div class="tweetContainer founderTweet">
     <div style="display: flex; justify-content: space-between">
         <div style="display: flex; align-items: center; margin-bottom: 12px;">
             <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
-                 style=" margin-right: 15px;">
-            <div>
+                 style="margin-right: 15px;">
+            <div style="display: flex; flex-direction: column; align-items: center">
                 <p style="color: #f0f1f3; margin: 0; font-weight: bold;">
                     {{tweet.tweet.user.username}}</p>
-                <span style="color: #4f8a8b;">Member Since: {{tweet.tweet.user.joined_date}}</span>
+                <span class="founderLabel">Founder</span>
             </div>
         </div>
         <div>
-            <span class="time" style="color: #4f8a8b;">{{tweet.formatted_post_date}}</span>
+            <span class="time" style="color: #ffffff;">{{tweet.formatted_post_date}}</span>
         </div>
     </div>
 
@@ -21,7 +18,7 @@
         {{tweet.tweet.message}}
     </p>
 
-    <div style=" display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
         <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
             <button
                     hx-post="/tweets/{{ tweet.tweet.id }}/like"
@@ -48,75 +45,30 @@
     </div>
     <div id="comment-area-{{tweet.tweet.id}}"></div>
 </div>
-{%endif%}
-
-
-
 <style>
-    .tweetContainer {
-        max-width: 800px;
+    .founderTweet {
+        border: 1px solid gold; /* Gold outline */
+    }
+
+    .founderTweet span.founderLabel {
+        color: gold;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
         background-color: #1e242d;
-        color: #1d1f21;
-        border-radius: 12px;
-        padding: 20px;
-        margin: 15px auto;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    h3 p {
-        font-size: 18px;
-    }
-
-    .emoji {
-        font-size: 18px;
-    }
-
-    .emojiCount {
-        font-size: 18px;
-    }
-
-    span {
-        font-size: 15px
-    }
-
-    img {
-        height: 48px;
+        padding: 3px 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
 
     @media (max-width: 1200px) {
-        p {
-            font-size: 30px; /* Slightly larger font size */
+        .founderTweet {
+            font-size: 1.1rem;
         }
 
-        .emoji {
-            font-size: 40px;
-        }
-
-        .emojiCount {
-            font-size: 30px;
-        }
-
-        span {
+        .founderTweet span.founderLabel {
             font-size: 20px;
         }
-
-        img {
-            height: 70px;
-        }
     }
-
-
 </style>
-
-<script>
-    function updateButtonState(button) {
-        const currentUrl = button.getAttribute('hx-get');
-        const tweetId = button.getAttribute('data-tweet-id');
-        const urlParams = new URLSearchParams(currentUrl.split('?')[1]);
-        const isShown = urlParams.get('shown') === 'false';
-        const newUrl = `/tweets/${tweetId}/comment?shown=${isShown}`;
-        button.setAttribute('hx-get', newUrl);
-        htmx.process(button);
-    }
-</script>

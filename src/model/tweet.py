@@ -27,10 +27,10 @@ class Tweet(BaseModel):
         select = Tweet.get_or_none(Tweet.id == int(input_id))
         return select
 
-    def formatted_post_date(self):
+    def formatted_post_date(cls):
         try:
-            parsed_date = dt.strptime(self.post_date.split(".")[0],
+            parsed_date = dt.strptime(cls.post_date.split(".")[0],
                                       "%Y-%m-%d %H:%M:%S")
             return parsed_date.strftime("%b %d, %Y - %-I:%M %p")
         except Exception:
-            return self.post_date
+            return cls.post_date
