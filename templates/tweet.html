@@ -1,24 +1,26 @@
-<div id="tweetContainer-{{tweet.tweet.id}}"
-     style="width: 60%; background-color: #1e242d; color: #1d1f21; border-radius: 12px; padding: 20px; margin: 15px auto; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+{%if tweet.tweet.user.isFounder%}
+    {% include "founderTweet.html" %}
+{%else%}
+    <div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer">
     <div style="display: flex; justify-content: space-between">
         <div style="display: flex; align-items: center; margin-bottom: 12px;">
             <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
-                 style="border-radius: 50%; height: 48px; margin-right: 15px;">
+                 style=" margin-right: 15px;">
             <div>
-                <h3 style="font-size: 18px; color: #f0f1f3; margin: 0; font-weight: bold;">
-                    {{tweet.tweet.user.username}}</h3>
-                <span style="color: #4f8a8b; font-size: 15px;">Member Since: {{tweet.tweet.user.joined_date}}</span>
+                <p style="color: #f0f1f3; margin: 0; font-weight: bold;">
+                    {{tweet.tweet.user.username}}</p>
+                <span style="color: #4f8a8b;">Member Since: {{tweet.tweet.user.joined_date}}</span>
             </div>
         </div>
         <div style="display: flex; align-items: flex-start; gap: 10px;">
-            <span class="time" style="color: #4f8a8b; font-size: 15px;">{{tweet.tweet.post_date}}</span>
+            <span class="time" style="color: #4f8a8b;">{{tweet.formatted_post_date}}</span>
 
             {% if tweet.tweet.user.userID == user.userID and editPageOpen == True %}
             <div style="position: relative; cursor: pointer; text-align: right; display: flex; flex-direction: column; align-items: flex-start;">
                 <div class="dropdown">
                     <button onclick="toggleDropdown(event, this)"
                             style="background: none; border: none; display: inline-block; outline: none; height: 24px; padding: 0; margin: 0; align-self: flex-start;">
-                        <img src="/img/drag-vertical-svgrepo-com.svg" style="height: 24px;" alt="Three Dot Icon"/>
+                        <img class="editIcon" src="/img/drag-vertical-svgrepo-com.svg" alt="Three Dot Icon"/>
                     </button>
 
                     <div class="content">
@@ -44,7 +46,7 @@
     </div>
 
     <p id="tweet-text-{{ tweet.tweet.id }}"
-       style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;">
+       style="line-height: 1.6; font-weight: bold; color: #f0f1f3;">
         {{tweet.tweet.message}}
     </p>
 
@@ -54,9 +56,10 @@
                     hx-post="/tweets/{{ tweet.tweet.id }}/like"
                     hx-target="#like-count-{{ tweet.tweet.id }}"
                     hx-swap="outerHTML" style="all:unset; cursor: pointer">
-                {{tweet.heart_icon}}
+                <span class="emoji">{{tweet.heart_icon}}</span>
             </button>
-            <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
+            <span class="emojiCount"
+                  style="color: #989da1; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
         </div>
         <div style="display: flex; align-items: center; gap: 5px;">
             <button
@@ -66,13 +69,82 @@
                     hx-on::after-request="updateButtonState(this)"
                     data-tweet-id="{{ tweet.tweet.id }}"
                     style="all:unset; cursor: pointer">
-                💬
+                <span class="emoji">💬</span>
             </button>
-            <span style="color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.comment_count}}</span>
+            <span class="emojiCount"
+                  style="color: #989da1; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.comment_count}}</span>
         </div>
     </div>
     <div id="comment-area-{{tweet.tweet.id}}"></div>
 </div>
+{%endif%}
+
+
+
+<style>
+    .tweetContainer {
+        max-width: 800px;
+        background-color: #1e242d;
+        color: #1d1f21;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 15px auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    h3 p {
+        font-size: 18px;
+    }
+
+    .emoji {
+        font-size: 18px;
+    }
+
+    .emojiCount {
+        font-size: 18px;
+    }
+
+    span {
+        font-size: 15px
+    }
+
+    .editIcon {
+        height: 24px;
+    }
+
+    img {
+        height: 48px;
+    }
+
+
+    @media (max-width: 1200px) {
+        p {
+            font-size: 30px; /* Slightly larger font size */
+        }
+
+        .emoji {
+            font-size: 40px;
+        }
+
+        .emojiCount {
+            font-size: 30px;
+        }
+
+        span {
+            font-size: 20px;
+        }
+
+        img {
+            height: 70px;
+        }
+
+        .editIcon{
+            height: 30px;
+        }
+    }
+
+
+</style>
 
 
 <script>

@@ -1,0 +1,74 @@
+<div class="tweetContainer founderTweet">
+    <div style="display: flex; justify-content: space-between">
+        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+            <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
+                 style="margin-right: 15px;">
+            <div style="display: flex; flex-direction: column; align-items: center">
+                <p style="color: #f0f1f3; margin: 0; font-weight: bold;">
+                    {{tweet.tweet.user.username}}</p>
+                <span class="founderLabel">Founder</span>
+            </div>
+        </div>
+        <div>
+            <span class="time" style="color: #ffffff;">{{tweet.formatted_post_date}}</span>
+        </div>
+    </div>
+
+    <p style="line-height: 1.6; font-weight: bold; color: #f0f1f3;">
+        {{tweet.tweet.message}}
+    </p>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
+        <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
+            <button
+                    hx-post="/tweets/{{ tweet.tweet.id }}/like"
+                    hx-target="#like-count-{{ tweet.tweet.id }}"
+                    hx-swap="outerHTML" style="all:unset; cursor: pointer">
+                <span class="emoji">{{tweet.heart_icon}}</span>
+            </button>
+            <span class="emojiCount"
+                  style="color: #989da1; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.likes}}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px;">
+            <button
+                    hx-get="/tweets/{{tweet.tweet.id}}/comment?shown=false"
+                    hx-target="#comment-area-{{tweet.tweet.id}}"
+                    hx-swap="outerHTML"
+                    hx-on::after-request="updateButtonState(this)"
+                    data-tweet-id="{{ tweet.tweet.id }}"
+                    style="all:unset; cursor: pointer">
+                <span class="emoji">💬</span>
+            </button>
+            <span class="emojiCount"
+                  style="color: #989da1; text-decoration: underline; text-decoration-color: #989da1;">{{tweet.comment_count}}</span>
+        </div>
+    </div>
+    <div id="comment-area-{{tweet.tweet.id}}"></div>
+</div>
+<style>
+    .founderTweet {
+        border: 1px solid gold; /* Gold outline */
+    }
+
+    .founderTweet span.founderLabel {
+        color: gold;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        background-color: #1e242d;
+        padding: 3px 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+
+    @media (max-width: 1200px) {
+        .founderTweet {
+            font-size: 1.1rem;
+        }
+
+        .founderTweet span.founderLabel {
+            font-size: 20px;
+        }
+    }
+</style>

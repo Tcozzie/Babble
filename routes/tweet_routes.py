@@ -51,7 +51,8 @@ def get_tweets(page):
             "likes": int(likes),
             "heart_icon": heart_icon,
             "comments": comments,
-            "comment_count": len(comments)
+            "comment_count": len(comments),
+            "formatted_post_date": tweet.formatted_post_date()
         })
 
     return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1, user=user)
@@ -75,7 +76,7 @@ def like_tweet(tweet_id):
         liked = True
 
     heart_icon = "❤️" if liked else "🤍"
-    return f"<div id='like-count-{tweet_id}' style='display: flex; align-items: center; gap: 5px;'><button hx-post='/tweets/{tweet_id}/like' hx-target='#like-count-{tweet_id}' hx-swap='outerHTML' style='all:unset'>{heart_icon}</button><span style='color: #989da1; font-size: 16px; text-decoration: underline; text-decoration-color: #989da1;'>{new_likes}</span></div>"
+    return f"<div id='like-count-{tweet_id}' style='display: flex; align-items: center; gap: 5px;'><button hx-post='/tweets/{tweet_id}/like' hx-target='#like-count-{tweet_id}' hx-swap='outerHTML' style='all:unset'><span class='emoji'>{heart_icon}</span></button><span class='emojiCount' style='color: #989da1; text-decoration: underline; text-decoration-color: #989da1;'>{new_likes}</span></div>"
 
 
 @bp.get("/tweets/<tweet>/comment")
@@ -101,7 +102,8 @@ def create_message():
 
     user = User.find(user_id=userID)
     tweet = Tweet(message=request.form['tweet'], user=user)
-    tweet.save()
+    if 0 < len(request.form['tweet']) <= 300:
+        tweet.save()
     return redirect('/users/getUser')
 
 
@@ -116,7 +118,9 @@ def create_comment(tweet_id):
     comment_message = request.form['comment']
 
     comment = Comment(message=comment_message, corresponding_tweet=tweet, user=user)
-    comment.save()
+
+    if 0 < len(request.form['comment']) <= 300:
+        comment.save()
 
     comments = comment.get_all_comments(tweet)
 
@@ -175,5 +179,6 @@ def update_tweet(tweet_id):
 
     tweet = Tweet.find(tweet_id)
     tweet.message = request.form['message']
-    tweet.save()
+    if 0 < len(request.form['message']) <= 300:
+        tweet.save()
     return f"<p id='tweet-text-{ tweet.id }'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
