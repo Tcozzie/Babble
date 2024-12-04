@@ -1,126 +1,173 @@
-<div id="comment-area-{{tweet}}"
-     style="margin-top: 10px; max-height: 400px; overflow-y: auto; background-color: #252b33; border-radius: 5px; padding: 0 15px 15px 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
-    <div style="position: sticky; top: 0; background-color: #252B33FF; padding-top: 15px">
-        <div style="display: flex; justify-content: space-between;">
-            <h4 style="color: #4f8a8b; margin-bottom: 10px;">Comments</h4>
-            <div style="color: #888; padding-top: 20px">
-                <span id="charCount-{{ tweet }}" style=" color: #888; margin-top: 0">0/150</span>
-            </div>
-        </div>
-        <div style="padding-top: 10px; border-top: 1px solid grey;">
-            <form hx-post="/comment/{{ tweet }}/"
-                  hx-swap="outerHTML"
-                  hx-target="#comment-area-{{tweet}}"
-                  style="display: flex; align-items: stretch; gap: 10px;">
-                <textarea
-                        class="commentSection"
-                        name="comment"
-                        placeholder="Add a comment..."
-                        style="flex: 1; line-height: 1.5; font-weight: bold; color: #f0f1f3; resize: none; overflow: hidden; padding: 10px; border-radius: 5px; border: 1px solid grey; background-color: #2d333b; box-sizing: border-box;"
-                        oninput="document.getElementById('charCount-{{ tweet }}').textContent = this.value.length + '/150';"
-                        maxlength="150"
-                ></textarea>
-
-                <button type="submit"
-                        style="flex: 0 1 100px; background-color: #4f8a8b; border: none; color: white; font-weight: bold; border-radius: 5px; cursor: pointer; text-align: center; box-sizing: border-box;">
-                    Post
-                </button>
-            </form>
-        </div>
+<div
+  id="comment-area-{{tweet}}"
+  style="
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #252b33;
+    border-radius: 5px;
+    padding: 0 15px 15px 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  "
+>
+  <div
+    style="
+      position: sticky;
+      top: 0;
+      background-color: #252b33ff;
+      padding-top: 15px;
+    "
+  >
+    <div style="display: flex; justify-content: space-between">
+      <h4 style="color: #4f8a8b; margin-bottom: 10px">Comments</h4>
+      <div style="color: #888; padding-top: 20px">
+        <span id="charCount-{{ tweet }}" style="color: #888; margin-top: 0"
+          >0/150</span
+        >
+      </div>
     </div>
-    {% for comment in comments %}
-    <span style="display: block; margin-bottom: 10px; color: #d1d5da;
+    <div style="padding-top: 10px; border-top: 1px solid grey">
+      <form
+        hx-post="/comment/{{ tweet }}/"
+        hx-swap="outerHTML"
+        hx-target="#comment-area-{{tweet}}"
+        style="display: flex; align-items: stretch; gap: 10px"
+      >
+        <textarea
+          class="commentSection"
+          name="comment"
+          placeholder="Add a comment..."
+          style="
+            flex: 1;
+            line-height: 1.5;
+            font-weight: bold;
+            color: #f0f1f3;
+            resize: none;
+            overflow: hidden;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid grey;
+            background-color: #2d333b;
+            box-sizing: border-box;
+          "
+          oninput="document.getElementById('charCount-{{ tweet }}').textContent = this.value.length + '/150';"
+          maxlength="150"
+        ></textarea>
+
+        <button
+          type="submit"
+          style="
+            flex: 0 1 100px;
+            background-color: #4f8a8b;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+          "
+        >
+          Post
+        </button>
+      </form>
+    </div>
+  </div>
+  {% for comment in comments %}
+  <span
+    style="display: block; margin-bottom: 10px; color: #d1d5da;
             {% if comment.user.username == user.username %}
                 border-left: 3px solid #3498db;
             {% else %}
                 border-left: 3px solid #e74c3c;
-            {% endif %} padding-left: 5px">
-        <strong>{{ comment.user.username }}:</strong> {{ comment.message }}
-    </span>
-    {% endfor %}
+            {% endif %} padding-left: 5px"
+  >
+    <strong>{{ comment.user.username }}:</strong> {{ comment.message }}
+  </span>
+  {% endfor %}
 </div>
 
 <style>
+  h3 p {
+    font-size: 18px;
+  }
+
+  h4 {
+    font-size: 30px;
+  }
+
+  span {
+    font-size: 15px;
+  }
+
+  strong {
+    font-size: 15px;
+  }
+
+  img {
+    height: 48px;
+  }
+
+  .commentSection {
+    font-size: 18px;
+    height: 60px;
+  }
+
+  button {
+    height: 60px;
+  }
+
+  .commentSection {
+    flex: 0 1 80%;
+    line-height: 2;
+    font-weight: bold;
+    color: #f0f1f3;
+    resize: none;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: #2d333b;
+  }
+
+  button {
+    flex: 0 1 20%;
+    background-color: #4f8a8b;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  @media (max-width: 1200px) {
     h3 p {
-        font-size: 18px;
+      font-size: 30px;
     }
 
     h4 {
-        font-size: 30px;
+      font-size: 50px;
     }
 
     span {
-        font-size: 15px;
+      font-size: 25px;
     }
 
     strong {
-        font-size: 15px;
+      font-size: 25px;
     }
 
     img {
-        height: 48px;
+      height: 70px;
     }
 
     .commentSection {
-        font-size: 18px;
-        height: 60px;
+      height: 100px;
     }
 
     button {
-        height: 60px;
+      height: 100px;
     }
-
-    .commentSection {
-        flex: 0 1 80%;
-        line-height: 2;
-        font-weight: bold;
-        color: #f0f1f3;
-        resize: none;
-        overflow: hidden;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid grey;
-        background-color: #2d333b;
-    }
-
-    button {
-        flex: 0 1 20%;
-        background-color: #4f8a8b;
-        border: none;
-        color: white;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    @media (max-width: 1200px) {
-        h3 p {
-            font-size: 30px;
-        }
-
-        h4 {
-            font-size: 50px;
-        }
-
-        span {
-            font-size: 25px;
-        }
-
-        strong {
-            font-size: 25px;
-        }
-
-        img {
-            height: 70px;
-        }
-
-        .commentSection {
-            height: 100px;
-        }
-
-        button {
-            height: 100px;
-        }
-    }
+  }
 </style>
