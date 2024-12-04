@@ -164,8 +164,9 @@ def edit_message(editing, tweet_id):
     tweet = Tweet.find(tweet_id)
 
     user = User.find(userID)
+    is_founder = request.args.get('isFounder') == "True"
 
-    if tweet.user != user:
+    if (tweet.user != user) and not is_founder:
         return "<script>window.location = '/'</script>"
 
     if editing == "True":

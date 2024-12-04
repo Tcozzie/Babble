@@ -25,7 +25,7 @@
 
                     <div class="content">
                         <input type="hidden" name="message" value="{{tweet.tweet.message}}">
-                        <button hx-get="/tweets/editMessage/{{True}}/{{tweet.tweet.id}}"
+                        <button hx-get="/tweets/editMessage/{{True}}/{{tweet.tweet.id}}?isFounder={{user.isFounder}}"
                                 hx-target="#tweet-text-{{ tweet.tweet.id }}"
                                 hx-swap="innerHTML">
                             EDIT
