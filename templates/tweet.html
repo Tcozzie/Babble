@@ -15,7 +15,7 @@
         <div style="display: flex; align-items: flex-start; gap: 10px;">
             <span class="time" style="color: #4f8a8b;">{{tweet.formatted_post_date}}</span>
 
-            {% if tweet.tweet.user.userID == user.userID and editPageOpen == True %}
+            {% if (tweet.tweet.user.userID == user.userID and editPageOpen == True) or user.isFounder %}
             <div style="position: relative; cursor: pointer; text-align: right; display: flex; flex-direction: column; align-items: flex-start;">
                 <div class="dropdown">
                     <button onclick="toggleDropdown(event, this)"
@@ -31,7 +31,7 @@
                             EDIT
                         </button>
 
-                        <form hx-delete="/delete/{{tweet.tweet.id}}"
+                        <form hx-delete="/delete/{{tweet.tweet.id}}?isFounder={{user.isFounder}}"
                               hx-target="#tweetContainer-{{tweet.tweet.id}}"
                               hx-swap="outerHTML">
                             <button type="submit" style="color: red; margin-bottom: 0; padding-bottom: 12px">

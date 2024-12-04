@@ -135,8 +135,9 @@ def delete_message(tweet_id):
     tweet = Tweet.find(tweet_id)
     user = User.find(userID)
     comments = Comment.get_all_comments(tweet)
+    is_founder = request.args.get('isFounder') == "True"
 
-    if tweet.user != user:
+    if (tweet.user != user) and not is_founder:
         return "<script>window.location = '/'</script>"
 
     for comment in comments:
