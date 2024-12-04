@@ -1,6 +1,8 @@
 .AuthContainer {
+    margin: auto;
+    text-align: center;
     height: 80vh;
-    width: 40%;
+    max-width: 500px;
     align-content: center;
 }
 
@@ -42,8 +44,8 @@ input[type="password"] {
 }
 
 .toggle-text {
-  margin-top: 15px;
-  color: #bfbfbf;
+    margin-top: 15px;
+    color: #bfbfbf;
 }
 
 .formContainer {

@@ -1,42 +1,88 @@
 <html lang="en">
-<head>
+  <head>
     <title>Babble</title>
-    <link rel="stylesheet" href="/css/pico.lime.css">
-    <link rel="stylesheet" href="/css/site.css">
-    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/pico.lime.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/auth.css" />
     <script src="/js/htmx.js"></script>
+  </head>
+  <style>
+    main {
+      display: block;
+      flex-direction: initial;
+      height: auto;
+      position: static;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
 
-</head>
-<body>
-<main class="container">
-    <header class="container center">
-        <h1><img style="height: 60px;" src="/img/blabberIcon.png" alt="blabberLogo"> Babble</h1>
-    </header>
+    body {
+      font-size: 20px;
+      min-width: 800px;
+    }
 
-    <div class="container center AuthContainer">
+    img {
+      height: 60px;
+    }
+
+    @media (max-width: 1200px) {
+      img {
+        height: 80px;
+      }
+
+      h1 {
+        font-size: 60px;
+      }
+
+      label {
+        font-size: 35px;
+      }
+
+      p {
+        font-size: 30px;
+      }
+    }
+  </style>
+  <body>
+    <main>
+      <header class="container center">
+        <h1>
+          <img
+            style="height: 60px"
+            src="/img/blabberIcon.png"
+            alt="blabberLogo"
+          />
+          Babble
+        </h1>
+      </header>
+
+      <div class="AuthContainer">
         <div class="main">
-            <h1 class="title">Sign In</h1>
-            <form action="/users/signIn" method="post" class="formContainer">
-                <div>
-                    <div class="input-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    {% if errorMessage %}
-                        <p style="color:red">{{errorMessage}}</p>
-                    {% endif %}
-                </div>
-                <button type="submit" style="width: 80%; margin-left: 60px;">Sign In</button>
-            </form>
+          <h1 class="title">Sign In</h1>
+          <form action="/users/signIn" method="post" class="formContainer">
+            <div>
+              <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+              </div>
+              <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+              </div>
+              {% if errorMessage %}
+              <p style="color: red">{{errorMessage}}</p>
+              {% endif %}
+            </div>
+            <button type="submit" style="width: 80%; margin: auto">
+              Sign In
+            </button>
+          </form>
         </div>
         <p class="toggle-text">
-            Don't have an account? <a href="/users/signUp">Sign Up</a>
+          Don't have an account? <a href="/users/signUp">Sign Up</a>
         </p>
-    </div>
-</main>
-</body>
+      </div>
+    </main>
+  </body>
 </html>

@@ -11,6 +11,7 @@ class User(BaseModel):
     userID = CharField(primary_key=True)
     profilePic = CharField()
     joined_date = DateTimeField(default=lambda: datetime.datetime.now().strftime('%b %d, %Y'))
+    isFounder = BooleanField(default=False)
 
     @classmethod
     def all(cls, user_id, search=None):

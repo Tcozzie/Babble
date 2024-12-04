@@ -1,20 +1,75 @@
 <form action="/create" method="post">
-    <label>
-            <textarea
-                    name="tweet"
-                    placeholder="Say Something Interesting..."
-                    style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3; width: 100%; resize: none; overflow: hidden; margin: 0;"
-                    oninput="document.getElementById('charCount').textContent = this.value.length + '/300'; this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
-                    maxlength="300"
-            ></textarea>
-    </label>
-    <div style="font-size: 14px; color: #888; display: flex; justify-content: right">
-        <span id="charCount">0/300</span>
+  <label>
+    <textarea
+      name="tweet"
+      placeholder="Say Something Interesting..."
+      oninput="document.getElementById('charCount').textContent = this.value.length + '/300'; this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
+      maxlength="300"
+    ></textarea>
+  </label>
+  <div
+    style="font-size: 14px; color: #888; display: flex; justify-content: right"
+  >
+    <span id="charCount">0/300</span>
+  </div>
+  <div style="margin-top: 10px; border-top: grey 1px solid">
+    <div
+      style="
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 10px;
+      "
+    >
+      <button
+        type="submit"
+        style="background-color: #4f8a8b; border-color: white; color: white"
+      >
+        Post
+      </button>
     </div>
-    <div style="margin-top: 10px; border-top: grey 1px solid;">
-        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
-            <button type="submit" style="background-color: #4f8a8b; border-color: white; color: white">Post
-            </button>
-        </div>
-    </div>
+  </div>
 </form>
+
+<style>
+  h3 p {
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 15px;
+  }
+
+  img {
+    height: 48px;
+  }
+
+  textarea {
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: bold;
+    color: #f0f1f3;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  @media (max-width: 1200px) {
+    p {
+      font-size: 30px; /* Slightly larger font size */
+    }
+
+    span {
+      font-size: 20px;
+    }
+
+    img {
+      height: 70px;
+    }
+
+    textarea {
+      height: 150px;
+    }
+  }
+</style>
