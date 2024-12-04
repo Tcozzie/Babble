@@ -4,33 +4,55 @@
     <link rel="stylesheet" href="/css/pico.lime.css">
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="/css/popover.css">
-    <script src="/js/dropdown.js"> </script>
+    <script src="/js/dropdown.js"></script>
     <script src="/js/site.js"></script>
     <script src="/js/Sortable.js"></script>
     <script src="/js/htmx.js"></script>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            background-color: #13171f;
+            border-bottom: #b6b9b7 2px solid;
+            padding: 10px 0;
+            height: 100px;
+        }
+
+        .content-wrapper {
+            padding-top: 100px;
+            flex-grow: 1;
+        }
+
         main {
             display: block;
-            flex-direction: initial;
-            height: auto;
-            position: static;
             width: 100%;
+            flex-direction: initial;
             margin: 0;
             padding: 0;
         }
 
-        main > .content-wrapper {
-            flex-grow: 0;
+        h3 p {
+            font-size: 18px;
         }
 
-        main > nav {
-            position: static;
-            margin: 0;
-            padding: 0;
+        span {
+            font-size: 15px;
         }
 
-        body {
-            font-size: 20px;
+        img {
+            height: 48px;
         }
 
         @media (max-width: 1200px) {
@@ -38,20 +60,20 @@
                 font-size: 25px;
             }
         }
-
-
     </style>
 </head>
 <body>
 <main>
-    <nav style="justify-content: space-between; height: 100px; position: sticky; top: 0; background-color: #13171f; border-bottom: #b6b9b7 2px solid; z-index: 20">
-        <div style="width: 100%; display: flex; justify-content: space-between; margin: 0 30px 0 30px;">
+    <nav>
+        <div style="width: 100%; display: flex; justify-content: space-between; margin: 0 30px;">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 57%;">
                 <ul>
                     <li><a href="/users/logout">Logout</a></li>
                 </ul>
-                <h1 style="padding-bottom: 35px"><img style="height: 60px" src="/img/blabberIcon.png" alt="blabberLogo">
-                    Babble</h1>
+                <h1 style="padding-bottom: 35px">
+                    <img style="height: 60px" src="/img/blabberIcon.png" alt="blabberLogo">
+                    Babble
+                </h1>
             </div>
 
             <ul>
