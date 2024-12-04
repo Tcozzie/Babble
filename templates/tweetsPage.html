@@ -1,14 +1,10 @@
-<div hx-get="/tweets/{{nextPage}}"
-     hx-trigger="revealed"
-     hx-swap="afterend"
-     hx-indicator="#spinner-{{nextPage}}"
+<div
+  hx-get="/tweets/{{nextPage}}"
+  hx-trigger="revealed"
+  hx-swap="afterend"
+  hx-indicator="#spinner-{{nextPage}}"
 >
-    {% for tweet in tweets %}
-    {% include "tweet.html" %}
-    {% endfor %}
+  {% for tweet in tweets %} {% include "tweet.html" %} {% endfor %}
 </div>
 
-<img id="spinner-{{ nextPage }}"
-     class="my-indicator"
-     src="/img/cat.jpeg"
-/>
+<img id="spinner-{{ nextPage }}" class="my-indicator" src="/img/cat.jpeg" />
