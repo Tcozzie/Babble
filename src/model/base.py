@@ -2,7 +2,7 @@ import logging
 
 from peewee import Model, SqliteDatabase
 
-db = SqliteDatabase('todos.db')
+db = SqliteDatabase('babble.db')
 
 logger = logging.getLogger('peewee')
 logger.addHandler(logging.StreamHandler())
