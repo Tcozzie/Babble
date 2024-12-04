@@ -12,3 +12,15 @@
          src="/img/cat.jpeg"
     />
 </div>
+
+<script>
+    window.addEventListener('scroll', function () {
+        if (window.scrollY === 0) {
+            refreshPage();
+        }
+    });
+
+    function refreshPage() {
+        window.location = '/'
+    }
+</script>
