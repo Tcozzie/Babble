@@ -3,10 +3,10 @@
 {%else%}
 <div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer">
     <div style="display: flex; justify-content: space-between">
-        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+        <div style="display: flex; align-items: center; margin-bottom: 12px; max-width: 80%">
             <img src={{tweet.tweet.user.profilePic}} alt="Profile Picture"
                  style=" margin-right: 15px;">
-            <div>
+            <div style="overflow: auto;">
                 <p style="color: #f0f1f3; margin: 0; font-weight: bold;">
                     {{tweet.tweet.user.username}}</p>
                 <span style="color: #4f8a8b;">Member Since: {{tweet.tweet.user.joined_date}}</span>
