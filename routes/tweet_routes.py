@@ -126,6 +126,7 @@ def create_comment(tweet_id):
 
     return render_template("commentSection.html", comments=comments, tweet=tweet, user=user)
 
+
 @bp.delete("/delete/<int:tweet_id>")
 def delete_message(tweet_id):
     userID = request.cookies.get('userId')
@@ -135,9 +136,8 @@ def delete_message(tweet_id):
     tweet = Tweet.find(tweet_id)
     user = User.find(userID)
     comments = Comment.get_all_comments(tweet)
-    is_founder = request.args.get('isFounder') == "True"
 
-    if (tweet.user != user) and not is_founder:
+    if (tweet.user != user) and not user.isFounder:
         return "<script>window.location = '/'</script>"
 
     for comment in comments:
@@ -164,9 +164,8 @@ def edit_message(editing, tweet_id):
     tweet = Tweet.find(tweet_id)
 
     user = User.find(userID)
-    is_founder = request.args.get('isFounder') == "True"
 
-    if (tweet.user != user) and not is_founder:
+    if (tweet.user != user) and not user.isFounder:
         return "<script>window.location = '/'</script>"
 
     if editing == "True":
@@ -183,4 +182,4 @@ def update_tweet(tweet_id):
     tweet.message = request.form['message']
     if 0 < len(request.form['message']) <= 300:
         tweet.save()
-    return f"<p id='tweet-text-{ tweet.id }'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
+    return f"<p id='tweet-text-{tweet.id}'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"

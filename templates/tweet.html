@@ -25,13 +25,13 @@
 
                     <div class="content">
                         <input type="hidden" name="message" value="{{tweet.tweet.message}}">
-                        <button hx-get="/tweets/editMessage/{{True}}/{{tweet.tweet.id}}?isFounder={{user.isFounder}}"
+                        <button hx-get="/tweets/editMessage/{{True}}/{{tweet.tweet.id}}"
                                 hx-target="#tweet-text-{{ tweet.tweet.id }}"
                                 hx-swap="innerHTML">
                             EDIT
                         </button>
 
-                        <form hx-delete="/delete/{{tweet.tweet.id}}?isFounder={{user.isFounder}}"
+                        <form hx-delete="/delete/{{tweet.tweet.id}}"
                               hx-target="#tweetContainer-{{tweet.tweet.id}}"
                               hx-swap="outerHTML">
                             <button type="submit" style="color: red; margin-bottom: 0; padding-bottom: 12px">
