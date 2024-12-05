@@ -119,7 +119,7 @@ def create_comment(tweet_id):
 
     comment = Comment(message=comment_message, corresponding_tweet=tweet, user=user)
 
-    if 0 <= len(request.form['comment']) <= 300:
+    if 0 < len(request.form['comment']) <= 300:
         comment.save()
 
     comments = comment.get_all_comments(tweet)
