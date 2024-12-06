@@ -2,7 +2,9 @@
       hx-patch="/tweets/{{ tweet.id }}/update/"
       hx-swap="outerHTML"
       hx-target="#tweet-text-{{ tweet.id }}">
-    <textarea autofocus required maxlength="300" minlength="1" type="text" name="message" class="editArea">{{tweet.message.strip()}}</textarea>
+    <textarea autofocus required maxlength="300" minlength="1" type="text" name="message" class="editArea"
+              oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
+    >{{tweet.message.strip()}}</textarea>
     <button type="submit"
             class="updateButton">
         Update
@@ -10,9 +12,12 @@
 </form>
 
 <style>
-    .updateButton{
+    .updateButton {
         font-size: 18px;
-        background-color: #4f8a8b; border: white; color: white; margin-top: 10px;
+        background-color: #4f8a8b;
+        border: white;
+        color: white;
+        margin-top: 10px;
     }
 
     .editArea {
@@ -31,10 +36,12 @@
         button {
             height: 100px;
         }
-        .editArea{
+
+        .editArea {
             font-size: 30px;
         }
-        .updateButton{
+
+        .updateButton {
             font-size: 30px;
         }
     }
