@@ -3,7 +3,6 @@
       hx-swap="outerHTML"
       hx-target="#tweet-text-{{ tweet.id }}">
     <textarea autofocus required maxlength="300" minlength="1" type="text" name="message" class="editArea"
-              oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
     >{{tweet.message.strip()}}</textarea>
     <button type="submit"
             class="updateButton">
@@ -25,7 +24,8 @@
         line-height: 1.6;
         font-weight: bold;
         color: #f0f1f3;
-        border: white
+        border: white;
+        overflow-y: auto;
     }
 
     button {
