@@ -86,20 +86,3 @@ div[style*="display: flex; align-items: flex-start"] {
     }
 }
 
-@media (max-width: 1200px) {
-    .dropdown .content {
-        width: 200px;
-    }
-
-    .dropdown .content button {
-        padding: 16px 20px;
-        font-size: 16px;
-        height: 70px;
-    }
-
-    .dropdown .content button[type="submit"] {
-        padding: 16px 20px;
-        font-size: 16px;
-        height: 70px;
-    }
-}
