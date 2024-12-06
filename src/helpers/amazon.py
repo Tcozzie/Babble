@@ -1,12 +1,9 @@
 import boto3
 import jwt
+from config import CLIENT_ID
 
 # Initialize a boto3 client for Cognito
 client = boto3.client('cognito-idp', region_name='us-west-2')
-
-# These are ok to share publicly
-USER_POOL_ID = "us-west-2_EIgTRY9BB"
-CLIENT_ID = "8b0e5aj57j4oevrtcdpe5455u"
 
 
 # Signing in
