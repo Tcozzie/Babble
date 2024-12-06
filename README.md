@@ -7,6 +7,9 @@ Partners: Tiegan Cozzie, Burgin Luker, Josh Wilcox, Morgan Hanson
 1. make sure you have downloaded redis to your system
 2. run `redis-server`
 
+## Amazon Cognito
+To make this app work you will have to create your own amazon cognito user pool.
+Sorry that I had to remove mine and make it private. Im unfortunately not a charity LOL
 
 # For Tiegan
 ## EC2 Environment
