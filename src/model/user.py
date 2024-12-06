@@ -1,4 +1,6 @@
 import datetime
+from datetime import datetime as dt
+from zoneinfo import ZoneInfo
 
 from peewee import *
 
@@ -10,7 +12,7 @@ class User(BaseModel):
     email = CharField()
     userID = CharField(primary_key=True)
     profilePic = CharField()
-    joined_date = DateTimeField(default=lambda: datetime.datetime.now().strftime('%b %d, %Y'))
+    joined_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")))
     isFounder = BooleanField(default=False)
 
     @classmethod
@@ -37,3 +39,11 @@ class User(BaseModel):
         query = User.update(profilePic=new_profile_pic).where(User.userID == user_id)
         rows_updated = query.execute()
         return rows_updated
+
+    def formatted_joined_date(cls):
+        try:
+            parsed_date = dt.strptime(cls.joined_date.split(".")[0],
+                                      "%Y-%m-%d %H:%M:%S")
+            return parsed_date.strftime("%b %d, %Y")
+        except Exception:
+            return cls.joined_date

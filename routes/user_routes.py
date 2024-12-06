@@ -33,7 +33,8 @@ def get_user():
             "heart_icon": heart_icon,
             "comments": comments,
             "comment_count": len(comments),
-            "formatted_post_date": tweet.formatted_post_date()
+            "formatted_post_date": tweet.formatted_post_date(),
+            "formatted_joined_date": user.formatted_joined_date()
         })
 
     return render_template("profile.html", user=user, tweets=tweet_data)

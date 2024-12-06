@@ -52,7 +52,8 @@ def get_tweets(page):
             "heart_icon": heart_icon,
             "comments": comments,
             "comment_count": len(comments),
-            "formatted_post_date": tweet.formatted_post_date()
+            "formatted_post_date": tweet.formatted_post_date(),
+            "formatted_joined_date": user.formatted_joined_date()
         })
 
     return render_template("tweetsPage.html", tweets=tweet_data, nextPage=page + 1, user=user)
