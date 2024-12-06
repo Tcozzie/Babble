@@ -1,16 +1,28 @@
 <form id="formID-{{tweet.id}}"
       hx-patch="/tweets/{{ tweet.id }}/update/"
       hx-swap="outerHTML"
-      hx-target="#tweet-text-{{ tweet.id }}"
-      style="font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;">
-    <textarea autofocus required maxlength="300" minlength="1" type="text" name="message" style="border: white">{{tweet.message.strip()}}</textarea>
+      hx-target="#tweet-text-{{ tweet.id }}">
+    <textarea autofocus required maxlength="300" minlength="1" type="text" name="message" class="editArea">{{tweet.message.strip()}}</textarea>
     <button type="submit"
-            style="background-color: #4f8a8b; border: white; color: white; margin-top: 10px;">
+            class="updateButton">
         Update
     </button>
 </form>
 
 <style>
+    .updateButton{
+        font-size: 18px;
+        background-color: #4f8a8b; border: white; color: white; margin-top: 10px;
+    }
+
+    .editArea {
+        font-size: 18px;
+        line-height: 1.6;
+        font-weight: bold;
+        color: #f0f1f3;
+        border: white
+    }
+
     button {
         height: 60px;
     }
@@ -18,6 +30,12 @@
     @media (max-width: 1200px) {
         button {
             height: 100px;
+        }
+        .editArea{
+            font-size: 30px;
+        }
+        .updateButton{
+            font-size: 30px;
         }
     }
 </style>

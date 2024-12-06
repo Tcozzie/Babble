@@ -1,76 +1,88 @@
 <form action="/create" method="post">
-  <label>
+    <label>
     <textarea
-      name="tweet"
-      placeholder="Say Something Interesting..."
-      oninput="document.getElementById('charCount').textContent = this.value.length + '/300'; this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
-      maxlength="300"
-      minlength="1"
+            name="tweet"
+            placeholder="Say Something Interesting..."
+            oninput="document.getElementById('charCount').textContent = this.value.length + '/300'; this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
+            maxlength="300"
+            minlength="1"
     ></textarea>
-  </label>
-  <div
-    style="font-size: 14px; color: #888; display: flex; justify-content: right"
-  >
-    <span id="charCount">0/300</span>
-  </div>
-  <div style="margin-top: 10px; border-top: grey 1px solid">
+    </label>
     <div
-      style="
+            style="font-size: 14px; color: #888; display: flex; justify-content: right"
+    >
+        <span id="charCount">0/300</span>
+    </div>
+    <div style="margin-top: 10px; border-top: grey 1px solid">
+        <div
+                style="
         display: flex;
         justify-content: flex-end;
         align-items: center;
         margin-top: 10px;
       "
-    >
-      <button
-        type="submit"
-        style="background-color: #4f8a8b; border-color: white; color: white"
-      >
-        Post
-      </button>
+        >
+            <button
+                    type="submit"
+                    class="postButton"
+            >
+                Post
+            </button>
+        </div>
     </div>
-  </div>
 </form>
 
 <style>
-  h3 p {
-    font-size: 18px;
-  }
-
-  span {
-    font-size: 15px;
-  }
-
-  img {
-    height: 48px;
-  }
-
-  textarea {
-    font-size: 18px;
-    line-height: 1.6;
-    font-weight: bold;
-    color: #f0f1f3;
-    width: 100%;
-    resize: none;
-    overflow: hidden;
-    margin: 0;
-  }
-
-  @media (max-width: 1200px) {
-    p {
-      font-size: 30px; /* Slightly larger font size */
+    h3 p {
+        font-size: 18px;
     }
 
     span {
-      font-size: 20px;
+        font-size: 15px;
     }
 
     img {
-      height: 70px;
+        height: 48px;
+    }
+
+    .postButton {
+        font-size: 18px;
+        background-color: #4f8a8b;
+        border-color: white;
+        color: white
     }
 
     textarea {
-      height: 150px;
+        font-size: 18px;
+        line-height: 1.6;
+        font-weight: bold;
+        color: #f0f1f3;
+        width: 100%;
+        resize: none;
+        overflow: hidden;
+        margin: 0;
     }
-  }
+
+    @media (max-width: 1200px) {
+        p {
+            font-size: 30px; /* Slightly larger font size */
+        }
+
+        span {
+            font-size: 20px;
+        }
+
+        img {
+            height: 70px;
+        }
+
+        textarea {
+            height: 150px;
+            font-size: 30px;
+        }
+
+        .postButton{
+            font-size: 30px;
+        }
+    }
 </style>

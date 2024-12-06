@@ -28,14 +28,14 @@ div[style*="display: flex; align-items: flex-start"] {
 
 /* Dropdown Menu */
 .dropdown .content {
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
-    right: 0; /* Align to the button */
-    top: 110%; /* Position slightly below the button */
-    background-color:#1e242d; /* Dark theme */
-    border-radius: 4px; /* Slightly rounded corners for menu */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Strong shadow for depth */
-    width: 180px; /* Fixed width for consistency */
+    right: 0;
+    top: 110%;
+    background-color:#1e242d;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    width: 180px;
     z-index: 1000;
     padding: 8px 0 0;
 }
@@ -61,21 +61,20 @@ div[style*="display: flex; align-items: flex-start"] {
 }
 
 .dropdown .content button:hover {
-    background-color: #252b33; /* Accent color on hover */
+    background-color: #252b33;
     color: white;
 }
 
 /* DELETE Button Special Styling */
 .dropdown .content button[type="submit"] {
-    color: #ff4d4d; /* Bold red color for DELETE */
-}
-
-.dropdown .content button[type="submit"]:hover {
-    background-color: #252b33; /* Subtle red highlight */
     color: #ff4d4d;
 }
 
-/* Smooth Fade-In Animation */
+.dropdown .content button[type="submit"]:hover {
+    background-color: #252b33;
+    color: #ff4d4d;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -84,5 +83,23 @@ div[style*="display: flex; align-items: flex-start"] {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .dropdown .content {
+        width: 200px;
+    }
+
+    .dropdown .content button {
+        padding: 16px 20px;
+        font-size: 16px;
+        height: 70px;
+    }
+
+    .dropdown .content button[type="submit"] {
+        padding: 16px 20px;
+        font-size: 16px;
+        height: 70px;
     }
 }

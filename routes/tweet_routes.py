@@ -183,4 +183,4 @@ def update_tweet(tweet_id):
     tweet.message = request.form['message']
     if 0 < len(request.form['message']) <= 300:
         tweet.save()
-    return f"<p id='tweet-text-{tweet.id}'style='font-size: 18px; line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
+    return f"<p id='tweet-text-{tweet.id}'style='line-height: 1.6; font-weight: bold; color: #f0f1f3;'> {tweet.message} </p>"
