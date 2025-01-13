@@ -14,6 +14,7 @@ class User(BaseModel):
     profilePic = CharField()
     joined_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")))
     isFounder = BooleanField(default=False)
+    subscription = BooleanField(default=False)
 
     @classmethod
     def all(cls, user_id, search=None):

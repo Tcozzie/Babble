@@ -1,0 +1,134 @@
+<div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer subscriberTweet">
+    <div style="display: flex; justify-content: space-between">
+        <div style="display: flex; align-items: center; margin-bottom: 12px">
+            <img
+                    src="{{tweet.tweet.user.profilePic}}"
+                    alt="Profile Picture"
+                    style="margin-right: 15px"
+            />
+            <div style="display: flex; flex-direction: column;">
+                <p style="color: #f0f1f3; margin: 0; font-weight: bold">
+                    {{tweet.tweet.user.username}}
+                </p>
+                <span class="subscriberLabel">Premium Member</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span class="time" style="color: #ffffff;">{{tweet.formatted_post_date}}</span>
+
+            {% if tweet.tweet.user.userID == user.userID and editPageOpen == True %}
+            <div style="position: relative; cursor: pointer; text-align: right; display: flex; flex-direction: column; align-items: flex-start;">
+                <div class="dropdown">
+                    <button onclick="toggleDropdown(event, this)"
+                            style="background: none; border: none; display: inline-block; outline: none; height: 24px; padding: 0; margin: 0; align-self: flex-start;">
+                        <img class="editIcon" src="/img/drag-vertical-svgrepo-com.svg" alt="Three Dot Icon"/>
+                    </button>
+
+                    <div class="content">
+                        <input type="hidden" name="message" value="{{tweet.tweet.message}}">
+                        <button hx-get="/tweets/editMessage/{{True}}/{{tweet.tweet.id}}"
+                                hx-target="#tweet-text-{{ tweet.tweet.id }}"
+                                hx-swap="innerHTML">
+                            EDIT
+                        </button>
+
+                        <form hx-delete="/delete/{{tweet.tweet.id}}"
+                              hx-target="#tweetContainer-{{tweet.tweet.id}}"
+                              hx-swap="outerHTML">
+                            <button type="submit" style="color: red; margin-bottom: 0; padding-bottom: 12px">
+                                DELETE
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <p id="tweet-text-{{ tweet.tweet.id }}" style="line-height: 1.6; font-weight: bold; color: #f0f1f3">
+        {{tweet.tweet.message}}
+    </p>
+
+    <div
+            style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      border-top: grey 1px solid;
+      padding-top: 10px;
+    "
+    >
+        <div
+                id="like-count-{{ tweet.tweet.id }}"
+                style="display: flex; align-items: center; gap: 5px"
+        >
+            <button
+                    hx-post="/tweets/{{ tweet.tweet.id }}/like"
+                    hx-target="#like-count-{{ tweet.tweet.id }}"
+                    hx-swap="outerHTML"
+                    style="all: unset; cursor: pointer"
+            >
+                <span class="emoji">{{tweet.heart_icon}}</span>
+            </button>
+            <span
+                    class="emojiCount"
+                    style="
+          color: #989da1;
+          text-decoration: underline;
+          text-decoration-color: #989da1;
+        "
+            >{{tweet.likes}}</span
+            >
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px">
+            <button
+                    hx-get="/tweets/{{tweet.tweet.id}}/comment?shown=false"
+                    hx-target="#comment-area-{{tweet.tweet.id}}"
+                    hx-swap="outerHTML"
+                    hx-on::after-request="updateButtonState(this)"
+                    data-tweet-id="{{ tweet.tweet.id }}"
+                    style="all: unset; cursor: pointer"
+            >
+                <span class="emoji">💬</span>
+            </button>
+            <span
+                    class="emojiCount"
+                    style="
+          color: #989da1;
+          text-decoration: underline;
+          text-decoration-color: #989da1;
+        "
+            >{{tweet.comment_count}}</span
+            >
+        </div>
+    </div>
+    <div id="comment-area-{{tweet.tweet.id}}"></div>
+</div>
+<style>
+    .subscriberTweet {
+        border: 1px solid #6a99fc;
+    }
+
+    .subscriberTweet span.subscriberLabel {
+        color: #6a99fc;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        background-color: #1e242d;
+        padding: 3px 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 1200px) {
+        .subscriberTweet {
+            font-size: 1.1rem;
+        }
+
+        .subscriberTweet span.subscriberLabel {
+            font-size: 20px;
+        }
+    }
+</style>

@@ -1,5 +1,7 @@
 {%if tweet.tweet.user.isFounder%}
 {% include "founderTweet.html" %}
+{%elif tweet.tweet.user.subscription%}
+{% include "subscriberTweet.html"%}
 {%else%}
 <div id="tweetContainer-{{tweet.tweet.id}}" class="tweetContainer">
     <div style="display: flex; justify-content: space-between">
