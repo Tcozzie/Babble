@@ -1,6 +1,8 @@
 import boto3
 import jwt
 from config import CLIENT_ID
+import uuid
+import os
 
 # Initialize a boto3 client for Cognito
 client = boto3.client('cognito-idp', region_name='us-west-2')
@@ -54,6 +56,30 @@ def register_user(username, password, email):
     except Exception as e:
         print(f"An error occurred during sign-up: {e}")
         return e
+
+
+def upload_image_to_s3(request):
+    try:
+        image_file = request.files.get('image')
+        if image_file and image_file.filename != '':
+            s3 = boto3.client('s3', region_name="us-west-2")
+            ext = os.path.splitext(image_file.filename)[1]
+            unique_filename = f"user-uploads/{uuid.uuid4()}{ext}"
+
+            # Could possibly put file compression here to better optimize s3 storage
+
+            s3.upload_fileobj(
+                image_file,
+                "babble-uploads",
+                unique_filename,
+                ExtraArgs={'ContentType': image_file.content_type}
+            )
+
+            uploaded_url = f"https://babble-uploads.s3.us-west-2.amazonaws.com/{unique_filename}"
+            return uploaded_url  # Return the URL directly
+    except Exception as e:
+        print(f"An error occurred when uploading image: {e}")
+        raise
 
 
 # Email will be sent to new user to verify their email

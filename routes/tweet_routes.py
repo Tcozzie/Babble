@@ -5,7 +5,7 @@ from flask import request, render_template, redirect, Blueprint
 
 from src.model.Comment import Comment
 from src.model.tweet import Tweet
-
+from src.helpers.amazon import upload_image_to_s3
 from src.model.user import User
 
 bp = Blueprint('tweets', __name__)
@@ -103,8 +103,25 @@ def create_message():
 
     user = User.find(user_id=userID)
     tweet = Tweet(message=request.form['tweet'], user=user)
+
+    # Check if there is an image to process
+    image_file = request.files.get('image')
+    if image_file and image_file.filename != '':
+        try:
+            # If there is an image we have to upload it to s3
+            uploaded_url = upload_image_to_s3(request)
+
+            # If successful we need to save the url to the image on the tweet
+            tweet.image_url = uploaded_url
+        except Exception as e:
+            print("Image upload failed:", e)
+            return redirect('/users/getUser')
+
     if 0 < len(request.form['tweet']) <= 300:
         tweet.save()
+    elif image_file and image_file.filename != '':
+        tweet.save()
+
     return redirect('/users/getUser')
 
 

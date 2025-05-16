@@ -1,12 +1,10 @@
-<form action="/create" method="post">
+<form action="/create" method="post" enctype="multipart/form-data">
     <label>
     <textarea
             name="tweet"
             placeholder="Say Something Interesting..."
             oninput="document.getElementById('charCount').textContent = this.value.length + '/300'; this.style.height = ''; this.style.height = this.scrollHeight + 'px';"
             maxlength="300"
-            minlength="1"
-            required
     ></textarea>
     </label>
     <div
@@ -14,15 +12,22 @@
     >
         <span id="charCount">0/300</span>
     </div>
-    <div style="margin-top: 10px; border-top: grey 1px solid">
-        <div
-                style="
+    <div id="imagePreview" style="display: none;">
+        <img id="previewImg" src="" alt="Image Preview"
+             style="width: 100%; height: auto; max-height: 500px; border-radius: 12px; object-fit: contain; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); margin-top: 10px;"/>
+    </div>
+    <div style="margin-top: 10px; border-top: grey 1px solid;">
+        <div style="
         display: flex;
-        justify-content: flex-end;
         align-items: center;
         margin-top: 10px;
       "
         >
+            <div>
+                <div id="upload-toggle" class="uploadButton">📎</div>
+                <input id="image-upload" type="file" name="image" accept="image/*" style="display: none;"
+                       onchange="previewImage(event)">
+            </div>
             <button
                     type="submit"
                     class="postButton"
@@ -51,6 +56,16 @@
         background-color: #4f8a8b;
         border-color: white;
         color: white
+    }
+
+    .uploadButton {
+        cursor: pointer;
+        margin-right: 10px;
+        background-color: rgba(79, 138, 139, 0.6);
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 20px
     }
 
     textarea {
@@ -82,8 +97,48 @@
             font-size: 30px;
         }
 
-        .postButton{
+        .postButton {
             font-size: 30px;
+        }
+
+        .uploadButton {
+            margin-bottom: 15px;
+            font-size: 27px;
         }
     }
 </style>
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('previewImg');
+        const container = document.getElementById('imagePreview');
+        const file = event.target.files[0];
+        const toggle = document.getElementById('upload-toggle');
+
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            container.style.display = 'block';
+            toggle.textContent = '❌';
+            toggle.onclick = function () {
+                preview.src = '';
+                container.style.display = 'none';
+                document.getElementById('image-upload').value = '';
+                toggle.textContent = '📎';
+                toggle.onclick = function () {
+                    document.getElementById('image-upload').click();
+                };
+            };
+        } else {
+            preview.src = '';
+            container.style.display = 'none';
+            toggle.textContent = '📎';
+            toggle.onclick = function () {
+                document.getElementById('image-upload').click();
+            };
+        }
+    }
+
+    // Initialize the click-to-upload behavior
+    document.getElementById('upload-toggle').onclick = function () {
+        document.getElementById('image-upload').click();
+    };
+</script>

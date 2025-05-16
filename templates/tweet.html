@@ -52,6 +52,15 @@
         {{tweet.tweet.message}}
     </p>
 
+    {% if tweet.tweet.image_url %}
+    <div style="display: flex; justify-content: center;" id="image-container-{{ tweet.tweet.id }}">
+        <img src="{{ tweet.tweet.image_url }}"
+             alt="Tweet image"
+             onerror="handleImageError({{ tweet.tweet.id }})"
+             style="width: 100%; height: auto; max-height: 500px; border-radius: 12px; object-fit: contain; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); margin-top: 10px;"/>
+    </div>
+    {% endif %}
+
     <div style=" display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: grey 1px solid; padding-top: 10px;">
         <div id="like-count-{{ tweet.tweet.id }}" style="display: flex; align-items: center; gap: 5px;">
             <button
@@ -162,6 +171,13 @@
 
 
 <script>
+    function handleImageError(tweetId) {
+        const container = document.getElementById(`image-container-${tweetId}`);
+        if (container) {
+            container.innerHTML = `<div style="color: #888; font-style: italic; margin-top: 10px;">[Image failed to load]</div>`;
+        }
+    }
+
     function updateButtonState(button) {
         const currentUrl = button.getAttribute("hx-get");
         const tweetId = button.getAttribute("data-tweet-id");

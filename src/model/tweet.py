@@ -9,6 +9,7 @@ from src.model.user import User
 
 class Tweet(BaseModel):
     message = FixedCharField(max_length=300)
+    image_url = CharField(null=True)
     user = ForeignKeyField(User, backref='tweets')
     post_date = DateTimeField(default=lambda: datetime.datetime.now(ZoneInfo("America/Denver")))
 

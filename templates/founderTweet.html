@@ -50,6 +50,15 @@
         {{tweet.tweet.message}}
     </p>
 
+    {% if tweet.tweet.image_url %}
+    <div style="display: flex; justify-content: center;" id="image-container-{{ tweet.tweet.id }}">
+        <img src="{{ tweet.tweet.image_url }}"
+             alt="Tweet image"
+             onerror="handleImageError({{ tweet.tweet.id }})"
+             style="width: 100%; height: auto; max-height: 500px; border-radius: 12px; object-fit: contain; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); margin-top: 10px;"/>
+    </div>
+    {% endif %}
+
     <div
             style="
       display: flex;
