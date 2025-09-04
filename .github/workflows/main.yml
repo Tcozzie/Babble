@@ -21,6 +21,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/331-finalProject-TODO
-            tmux kill-session -t babble || true
             git pull
-            tmux new -d -s babble "source venv/bin/activate && gunicorn -w 2 app:app"
+            source venv/bin/activate
+            sudo systemctl restart babble
+            sudo systemctl status babble --no-pager
